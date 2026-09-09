@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-B-hcVAMW.js";var t=e();function n({title:e,description:n}){return(0,t.jsxs)(`section`,{style:{padding:`2rem`},children:[(0,t.jsx)(`h1`,{children:e}),n&&(0,t.jsx)(`p`,{children:n}),(0,t.jsx)(`p`,{style:{color:`#888`},children:`Content for this page will be implemented in a later phase.`})]})}export{n as t};

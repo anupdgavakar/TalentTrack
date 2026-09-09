@@ -1,0 +1,45 @@
+<!--
+  PLACEHOLDER hero slide illustration (flat, abstract — not a real photo).
+  This slot is meant for real photography, managed by the admin "Banners"
+  module (see docs/DESIGN_SYSTEM.md). Swap the src on the HERO_SLIDES entry
+  in HomePage.jsx, or wire it to GET /api/banners once that exists.
+-->
+<svg width="600" height="440" viewBox="0 0 600 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="slideTrainingTitle">
+  <title id="slideTrainingTitle">Illustration of a learner studying at a desk with a laptop</title>
+  <defs>
+    <linearGradient id="bgTraining" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e7edfd" />
+      <stop offset="100%" stop-color="#e4f8ea" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="440" rx="24" fill="url(#bgTraining)" />
+  <circle cx="470" cy="90" r="70" fill="#ffffff" opacity="0.55" />
+  <circle cx="80" cy="360" r="90" fill="#ffffff" opacity="0.45" />
+
+  <!-- desk -->
+  <rect x="140" y="300" width="330" height="18" rx="6" fill="#0a1c37" />
+  <rect x="160" y="318" width="14" height="60" fill="#102a52" />
+  <rect x="440" y="318" width="14" height="60" fill="#102a52" />
+
+  <!-- laptop -->
+  <rect x="255" y="255" width="110" height="70" rx="6" fill="#1948b3" />
+  <rect x="263" y="263" width="94" height="50" rx="3" fill="#e7edfd" />
+  <rect x="235" y="296" width="150" height="10" rx="4" fill="#0a1c37" />
+
+  <!-- stacked books -->
+  <rect x="160" y="272" width="70" height="14" rx="3" fill="#2bbf62" />
+  <rect x="165" y="258" width="60" height="14" rx="3" fill="#8fe23f" />
+  <rect x="170" y="244" width="50" height="14" rx="3" fill="#1948b3" />
+
+  <!-- person -->
+  <circle cx="310" cy="180" r="34" fill="#0f1524" opacity="0.9" />
+  <path d="M250 300 C250 235 370 235 370 300 Z" fill="#1948b3" />
+  <path d="M270 255 L270 210 C270 190 350 190 350 210 L350 255" fill="none" stroke="#0a1c37" stroke-width="6" stroke-linecap="round" />
+
+  <!-- graduation cap -->
+  <g transform="translate(300 100)">
+    <path d="M0 10 L34 -2 L68 10 L34 22 Z" fill="#0a1c37" />
+    <rect x="30" y="10" width="8" height="20" fill="#0a1c37" />
+    <circle cx="34" cy="30" r="4" fill="#2bbf62" />
+  </g>
+</svg>

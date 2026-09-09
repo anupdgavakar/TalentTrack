@@ -1,0 +1,36 @@
+<!--
+  PLACEHOLDER hero slide illustration (flat, abstract — not a real photo).
+  See slide-training.svg for the swap-out note.
+-->
+<svg width="600" height="440" viewBox="0 0 600 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="slideConsultingTitle">
+  <title id="slideConsultingTitle">Illustration of two people in a career consulting conversation across a table</title>
+  <defs>
+    <linearGradient id="bgConsulting" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e4f8ea" />
+      <stop offset="100%" stop-color="#e7edfd" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="440" rx="24" fill="url(#bgConsulting)" />
+  <circle cx="80" cy="90" r="65" fill="#ffffff" opacity="0.5" />
+  <circle cx="510" cy="340" r="75" fill="#ffffff" opacity="0.5" />
+
+  <!-- table -->
+  <rect x="140" y="290" width="320" height="16" rx="6" fill="#0a1c37" />
+  <rect x="160" y="306" width="12" height="50" fill="#102a52" />
+  <rect x="428" y="306" width="12" height="50" fill="#102a52" />
+
+  <!-- person left -->
+  <circle cx="220" cy="200" r="30" fill="#0f1524" opacity="0.9" />
+  <path d="M168 290 C168 228 272 228 272 290 Z" fill="#1948b3" />
+
+  <!-- person right -->
+  <circle cx="380" cy="200" r="30" fill="#0f1524" opacity="0.9" />
+  <path d="M328 290 C328 228 432 228 432 290 Z" fill="#2bbf62" />
+
+  <!-- speech bubble with checkmark -->
+  <g transform="translate(255 90)">
+    <rect x="0" y="0" width="90" height="60" rx="16" fill="#ffffff" stroke="#e2e7f1" stroke-width="2" />
+    <path d="M20 60 L20 78 L42 60 Z" fill="#ffffff" stroke="#e2e7f1" stroke-width="2" />
+    <path d="M22 32 L38 48 L68 18" fill="none" stroke="#1f9d4f" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

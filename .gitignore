@@ -1,0 +1,5 @@
+# OS / editor noise not already covered by frontend/.gitignore or backend/.gitignore
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,181 @@
+/* ==========================================================================
+   Base element styles, reset and small layout utilities.
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--text-body);
+  background: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text-heading);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  margin: 0 0 var(--space-4);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--fs-3xl);
+}
+h2 {
+  font-size: var(--fs-2xl);
+}
+h3 {
+  font-size: var(--fs-xl);
+}
+h4 {
+  font-size: var(--fs-md);
+}
+
+p {
+  margin: 0 0 var(--space-4);
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Visible, high-contrast focus ring for keyboard users on every interactive
+   element — required for the project's accessibility target. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--blue-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 var(--space-4);
+  }
+  h1 {
+    font-size: var(--fs-2xl);
+  }
+  h2 {
+    font-size: var(--fs-xl);
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.section {
+  padding: var(--space-16) 0;
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: var(--space-10) 0;
+  }
+}
+
+.section--tight {
+  padding: var(--space-10) 0;
+}
+
+.section--subtle {
+  background: var(--bg-subtle);
+}
+
+.section--dark {
+  background: var(--gradient-navy);
+  color: var(--text-on-dark);
+}
+
+.section--dark h1,
+.section--dark h2,
+.section--dark h3 {
+  color: var(--white);
+}
+
+/* Visually hidden but still readable by screen readers — used for icon-only
+   controls (e.g. the header's mobile logout button) that need an
+   accessible name without visible label text. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* "Skip to main content" link (PublicLayout/AdminLayout, Phase 12) — sits
+   off-screen until it receives keyboard focus (the first Tab stop on any
+   page), then drops into view above everything else so a keyboard user
+   can jump past the header/sidebar nav straight to the page content. */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: var(--space-4);
+  z-index: 1000;
+  padding: var(--space-2) var(--space-4);
+  background: var(--navy-900);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}

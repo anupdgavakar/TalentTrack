@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-B-hcVAMW.js";import{t}from"./CategoryManager-B8HtZEEL.js";var n=e();function r(){return(0,n.jsx)(t,{type:`job`,heading:`Job Categories`,description:`Used to group job postings on the public Placement page.`,listingLabel:`job postings`,listingCachePrefix:`/admin/job-postings`})}export{r as default};

@@ -1,0 +1,21 @@
+<!--
+  PLACEHOLDER brand lockup (mark + wordmark) — no logo asset has been
+  supplied yet. Swap this file (and logo-mark.svg) for the real Talent
+  Track Technologies logo when it's provided; the Header/Footer/Logo
+  components reference these two files only, so replacing them is a
+  one-time, one-file change — nothing else needs to be touched.
+-->
+<svg width="238" height="40" viewBox="0 0 238 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Talent Track Technologies">
+  <defs>
+    <linearGradient id="ttLogoGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A1C37" />
+      <stop offset="55%" stop-color="#1948B3" />
+      <stop offset="100%" stop-color="#2BBF62" />
+    </linearGradient>
+  </defs>
+  <rect width="40" height="40" rx="11" fill="url(#ttLogoGradient)" />
+  <path d="M10 25 L17 18 L22 22 L30 12" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <path d="M24 12 H30 V18" stroke="#8FE23F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <text x="52" y="18" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="800" fill="#0A1C37" letter-spacing="-0.3">Talent Track</text>
+  <text x="52" y="33" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#2159D1" letter-spacing="1.2">TECHNOLOGIES</text>
+</svg>

@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-B-hcVAMW.js";import{t}from"./CategoryManager-B8HtZEEL.js";var n=e();function r(){return(0,n.jsx)(t,{type:`course`,heading:`Training Categories`,description:`Used to group courses on the public Training page.`,listingLabel:`courses`,listingCachePrefix:`/admin/courses`})}export{r as default};

@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-B-hcVAMW.js";import{t}from"./PageSectionManager-Czxcu-XK.js";var n=e();function r(){return(0,n.jsx)(t,{page:`contact`,heading:`Contact Page Content`,description:`Edit the text and images shown on the public Contact page. The address, phone and email details come from Settings, not here.`})}export{r as default};

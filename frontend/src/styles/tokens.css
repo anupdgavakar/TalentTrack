@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Talent Track Technologies — Design Tokens
+   Single source of truth for color, type, spacing, radius and shadow.
+   Components should always reference these variables — never hard-code a
+   hex value or a pixel size directly in a component file.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand color: Deep Navy (primary, headers, dark surfaces) ---- */
+  --navy-900: #0a1c37;
+  --navy-800: #102a52;
+  --navy-700: #163a6e;
+  --navy-600: #1d4b8c;
+
+  /* ---- Brand color: Royal / Professional Blue (primary actions) ---- */
+  --blue-700: #1948b3;
+  --blue-600: #2159d1;
+  --blue-500: #3170f0;
+  --blue-100: #e7edfd;
+
+  /* ---- Brand color: Fresh / Lime Green (accent, success, growth) ---- */
+  --green-600: #1f9d4f;
+  --green-500: #2bbf62;
+  --green-400: #4ad477;
+  --lime-400: #8fe23f;
+  --green-100: #e4f8ea;
+
+  /* ---- Neutrals ---- */
+  --white: #ffffff;
+  --bg-app: #f6f8fc;
+  --bg-subtle: #eef2f9;
+  --surface: #ffffff;
+  --border: #e2e7f1;
+  --border-strong: #cdd5e5;
+
+  /* ---- Text (dark charcoal family) ---- */
+  --text-heading: #0f1524;
+  --text-body: #444d61;
+  --text-muted: #6b7286;
+  --text-on-dark: #eef2fb;
+  --text-on-dark-muted: #aab6d1;
+
+  /* ---- Gradients ---- */
+  --gradient-navy: linear-gradient(135deg, var(--navy-900) 0%, var(--blue-700) 100%);
+  --gradient-navy-green: linear-gradient(135deg, var(--navy-900) 0%, var(--blue-700) 55%, var(--green-500) 130%);
+  --gradient-green: linear-gradient(135deg, var(--green-600) 0%, var(--lime-400) 100%);
+
+  /* ---- Typography ---- */
+  --font-sans: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: 2.25rem;
+  --fs-3xl: 3rem;
+  --lh-tight: 1.15;
+  --lh-snug: 1.35;
+  --lh-normal: 1.6;
+
+  /* ---- Spacing scale ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ---- Radius ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 999px;
+
+  /* ---- Shadow (tinted with brand navy for cohesion) ---- */
+  --shadow-sm: 0 1px 2px rgba(15, 25, 60, 0.06), 0 1px 1px rgba(15, 25, 60, 0.04);
+  --shadow-md: 0 8px 24px rgba(15, 25, 60, 0.08), 0 2px 6px rgba(15, 25, 60, 0.05);
+  --shadow-lg: 0 20px 48px rgba(15, 25, 60, 0.14), 0 6px 16px rgba(15, 25, 60, 0.08);
+
+  /* ---- Layout ---- */
+  --container-max: 1200px;
+  --header-height: 76px;
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+}
+
+/*
+  Breakpoint reference (mobile-first; used consistently across components):
+    --bp-sm:  640px   phones, landscape
+    --bp-md:  768px   tablets
+    --bp-lg:  1024px  small laptops / tablet landscape
+    --bp-xl:  1280px  desktop
+    --bp-2xl: 1536px  large desktop
+  CSS custom properties can't be used inside @media queries, so these are
+  applied directly as literal values in each component's stylesheet.
+*/

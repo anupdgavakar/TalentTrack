@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-B-hcVAMW.js";import{r as t}from"./index-BRzChsb2.js";import{t as n}from"./PagePlaceholder-C69czBNH.js";var r=e();function i(){return t({title:`Privacy Policy`,noindex:!0}),(0,r.jsx)(n,{title:`Privacy Policy`})}export{i as default};

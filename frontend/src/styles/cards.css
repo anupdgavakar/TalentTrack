@@ -1,0 +1,313 @@
+/* ==========================================================================
+   Card components: ServiceCard, CourseCard, PlacementCard, JobCard,
+   TestimonialCard, StatsCard.
+   ========================================================================== */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-6);
+}
+
+/* ---------- ServiceCard ---------- */
+.service-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  transition: transform var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+.service-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-navy-green);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+}
+.service-card h3 {
+  margin-bottom: var(--space-2);
+}
+.service-card p {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  flex-grow: 1;
+}
+.service-card__cta {
+  margin-top: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--blue-600);
+}
+.service-card:hover .service-card__cta {
+  color: var(--green-600);
+}
+.service-card__cta svg {
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+.service-card:hover .service-card__cta svg {
+  transform: translateX(3px);
+}
+
+/* ---------- CourseCard ---------- */
+.course-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: box-shadow var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard);
+}
+.course-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+.course-card__body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.course-card__category {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--blue-600);
+  background: var(--blue-100);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-3);
+}
+.course-card p {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  flex-grow: 1;
+}
+.course-card__meta {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin: var(--space-4) 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+.course-card__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.course-card__actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: auto;
+}
+
+/* ---------- PlacementCard ---------- */
+.placement-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  transition: transform var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard);
+}
+.placement-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.placement-card__icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--green-100);
+  color: var(--green-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.placement-card h4 {
+  margin-bottom: var(--space-1);
+}
+.placement-card__count {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+/* ---------- JobCard ---------- */
+.job-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  transition: box-shadow var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
+}
+.job-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue-100);
+}
+.job-card__main {
+  flex: 1 1 260px;
+}
+.job-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  flex-wrap: wrap;
+}
+.job-card__title-row h3 {
+  margin: 0;
+  font-size: var(--fs-md);
+}
+.job-card__badge {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--green-600);
+  background: var(--green-100);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+.job-card__company {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+.job-card__meta {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.job-card__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ---------- TestimonialCard ---------- */
+.testimonial-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.testimonial-card__quote {
+  color: var(--text-body);
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  flex-grow: 1;
+  margin-bottom: var(--space-6);
+}
+.testimonial-card__quote::before {
+  content: "\201C";
+  color: var(--green-500);
+  font-size: 2.5rem;
+  line-height: 0;
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: Georgia, serif;
+}
+.testimonial-card__person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.testimonial-card__avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-navy-green);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  flex-shrink: 0;
+}
+.testimonial-card__name {
+  font-weight: 700;
+  color: var(--text-heading);
+  font-size: var(--fs-sm);
+}
+.testimonial-card__role {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+/* ---------- StatsCard ---------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+.stats-card {
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.stats-card__icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--blue-100);
+  color: var(--blue-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stats-card__value {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  color: var(--navy-900);
+}
+.stats-card__label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .job-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

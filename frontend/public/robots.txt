@@ -1,0 +1,12 @@
+# Dev-mode fallback only. `vite build` overwrites this file (see the
+# generate-robots-txt plugin in vite.config.js) with a version whose
+# Sitemap: line points at the real backend origin — this static copy is
+# just what `npm run dev` serves locally, where nothing is crawling anyway.
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /login
+Disallow: /register
+
+Sitemap: http://localhost:8000/sitemap.xml
