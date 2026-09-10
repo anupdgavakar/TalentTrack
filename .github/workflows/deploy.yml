@@ -1,0 +1,146 @@
+name: Deploy TalentTrack to GoDaddy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Get the latest source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup PHP for Laravel
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, bcmath, ctype, fileinfo, openssl, pdo, pdo_mysql, tokenizer, xml
+          coverage: none
+
+      # 3. Install Laravel production dependencies
+      - name: Install Composer dependencies
+        working-directory: backend
+        run: |
+          composer install \
+            --no-dev \
+            --no-interaction \
+            --prefer-dist \
+            --optimize-autoloader
+
+      # 4. Setup Node.js for React/Vite
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      # 5. Install frontend dependencies
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      # 6. Build React production files
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      # 7. Create backend deployment archive
+      - name: Package backend
+        run: |
+          tar -czf backend-release.tar.gz \
+            --exclude=".env" \
+            --exclude="storage/*" \
+            --exclude="public/storage" \
+            --exclude="backend.zip" \
+            -C backend .
+
+      # 8. Create frontend deployment archive
+      - name: Package frontend
+        run: |
+          tar -czf frontend-release.tar.gz \
+            -C frontend/dist .
+
+      # 9. Configure SSH
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "${{ secrets.GODADDY_SSH_KEY }}" > ~/.ssh/talenttrack_deploy
+          chmod 600 ~/.ssh/talenttrack_deploy
+
+          ssh-keyscan -p "${{ secrets.GODADDY_PORT }}" \
+            "${{ secrets.GODADDY_HOST }}" >> ~/.ssh/known_hosts
+
+          chmod 644 ~/.ssh/known_hosts
+
+      # 10. Upload deployment packages
+      - name: Upload backend package
+        run: |
+          scp \
+            -i ~/.ssh/talenttrack_deploy \
+            -P "${{ secrets.GODADDY_PORT }}" \
+            backend-release.tar.gz \
+            "${{ secrets.GODADDY_USER }}@${{ secrets.GODADDY_HOST }}:/tmp/talenttrack-backend-release.tar.gz"
+
+      - name: Upload frontend package
+        run: |
+          scp \
+            -i ~/.ssh/talenttrack_deploy \
+            -P "${{ secrets.GODADDY_PORT }}" \
+            frontend-release.tar.gz \
+            "${{ secrets.GODADDY_USER }}@${{ secrets.GODADDY_HOST }}:/tmp/talenttrack-frontend-release.tar.gz"
+
+      # 11. Deploy on GoDaddy
+      - name: Deploy to GoDaddy
+        run: |
+          ssh \
+            -i ~/.ssh/talenttrack_deploy \
+            -p "${{ secrets.GODADDY_PORT }}" \
+            "${{ secrets.GODADDY_USER }}@${{ secrets.GODADDY_HOST }}" << 'REMOTE'
+
+          set -e
+
+          BACKEND_DIR="/home/rdl7egzh9h8p/public_html/api.talenttracktechnology.com"
+          FRONTEND_DIR="/home/rdl7egzh9h8p/public_html/talenttracktechnology.com"
+
+          echo "Deploying backend..."
+
+          tar -xzf /tmp/talenttrack-backend-release.tar.gz \
+            -C "$BACKEND_DIR"
+
+          rm -f /tmp/talenttrack-backend-release.tar.gz
+
+          echo "Deploying frontend..."
+
+          FRONTEND_TMP="/tmp/talenttrack-frontend"
+
+          rm -rf "$FRONTEND_TMP"
+          mkdir -p "$FRONTEND_TMP"
+
+          tar -xzf /tmp/talenttrack-frontend-release.tar.gz \
+            -C "$FRONTEND_TMP"
+
+          rsync -a --delete \
+            "$FRONTEND_TMP/" \
+            "$FRONTEND_DIR/"
+
+          rm -rf "$FRONTEND_TMP"
+          rm -f /tmp/talenttrack-frontend-release.tar.gz
+
+          echo "Refreshing Laravel..."
+
+          cd "$BACKEND_DIR"
+
+          php artisan optimize
+
+          echo "Deployment completed successfully."
+
+          REMOTE
