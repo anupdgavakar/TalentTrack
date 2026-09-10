@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Get the latest source code
+      # 1. Checkout source code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Setup PHP for Laravel
+      # 2. Setup PHP
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -33,7 +33,7 @@ jobs:
             --prefer-dist \
             --optimize-autoloader
 
-      # 4. Setup Node.js for React/Vite
+      # 4. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -46,12 +46,13 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      # 6. Build React production files
+      # 6. Build React/Vite frontend
       - name: Build frontend
         working-directory: frontend
         run: npm run build
 
-      # 7. Create backend deployment archive
+      # 7. Package Laravel backend
+      # .env and storage are deliberately excluded.
       - name: Package backend
         run: |
           tar -czf backend-release.tar.gz \
@@ -59,9 +60,10 @@ jobs:
             --exclude="storage/*" \
             --exclude="public/storage" \
             --exclude="backend.zip" \
+            --exclude=".git" \
             -C backend .
 
-      # 8. Create frontend deployment archive
+      # 8. Package frontend
       - name: Package frontend
         run: |
           tar -czf frontend-release.tar.gz \
@@ -73,52 +75,74 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
 
-          printf '%s\n' "${{ secrets.GODADDY_SSH_KEY }}" > ~/.ssh/talenttrack_deploy
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/talenttrack_deploy
           chmod 600 ~/.ssh/talenttrack_deploy
 
-          ssh-keyscan -p "${{ secrets.GODADDY_PORT }}" \
-            "${{ secrets.GODADDY_HOST }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" \
+            "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
           chmod 644 ~/.ssh/known_hosts
 
-      # 10. Upload deployment packages
+      # 10. Test SSH connection
+      - name: Test SSH connection
+        run: |
+          ssh \
+            -i ~/.ssh/talenttrack_deploy \
+            -p "${{ secrets.SSH_PORT }}" \
+            -o StrictHostKeyChecking=yes \
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" \
+            "echo 'SSH connection successful'"
+
+      # 11. Upload backend package
       - name: Upload backend package
         run: |
           scp \
             -i ~/.ssh/talenttrack_deploy \
-            -P "${{ secrets.GODADDY_PORT }}" \
+            -P "${{ secrets.SSH_PORT }}" \
+            -o StrictHostKeyChecking=yes \
             backend-release.tar.gz \
-            "${{ secrets.GODADDY_USER }}@${{ secrets.GODADDY_HOST }}:/tmp/talenttrack-backend-release.tar.gz"
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/tmp/talenttrack-backend-release.tar.gz"
 
+      # 12. Upload frontend package
       - name: Upload frontend package
         run: |
           scp \
             -i ~/.ssh/talenttrack_deploy \
-            -P "${{ secrets.GODADDY_PORT }}" \
+            -P "${{ secrets.SSH_PORT }}" \
+            -o StrictHostKeyChecking=yes \
             frontend-release.tar.gz \
-            "${{ secrets.GODADDY_USER }}@${{ secrets.GODADDY_HOST }}:/tmp/talenttrack-frontend-release.tar.gz"
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/tmp/talenttrack-frontend-release.tar.gz"
 
-      # 11. Deploy on GoDaddy
+      # 13. Deploy to GoDaddy
       - name: Deploy to GoDaddy
         run: |
           ssh \
             -i ~/.ssh/talenttrack_deploy \
-            -p "${{ secrets.GODADDY_PORT }}" \
-            "${{ secrets.GODADDY_USER }}@${{ secrets.GODADDY_HOST }}" << 'REMOTE'
+            -p "${{ secrets.SSH_PORT }}" \
+            -o StrictHostKeyChecking=yes \
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" << 'REMOTE'
 
           set -e
 
           BACKEND_DIR="/home/rdl7egzh9h8p/public_html/api.talenttracktechnology.com"
           FRONTEND_DIR="/home/rdl7egzh9h8p/public_html/talenttracktechnology.com"
 
-          echo "Deploying backend..."
+          echo "======================================"
+          echo "Deploying TalentTrack"
+          echo "======================================"
+
+          echo ""
+          echo "1. Deploying Laravel backend..."
 
           tar -xzf /tmp/talenttrack-backend-release.tar.gz \
             -C "$BACKEND_DIR"
 
           rm -f /tmp/talenttrack-backend-release.tar.gz
 
-          echo "Deploying frontend..."
+          echo "Backend files deployed."
+
+          echo ""
+          echo "2. Deploying React frontend..."
 
           FRONTEND_TMP="/tmp/talenttrack-frontend"
 
@@ -135,12 +159,23 @@ jobs:
           rm -rf "$FRONTEND_TMP"
           rm -f /tmp/talenttrack-frontend-release.tar.gz
 
-          echo "Refreshing Laravel..."
+          echo "Frontend files deployed."
+
+          echo ""
+          echo "3. Refreshing Laravel..."
 
           cd "$BACKEND_DIR"
 
           php artisan optimize
 
-          echo "Deployment completed successfully."
+          echo ""
+          echo "4. Checking Laravel..."
+
+          php artisan about
+
+          echo ""
+          echo "======================================"
+          echo "TalentTrack deployment completed!"
+          echo "======================================"
 
           REMOTE
