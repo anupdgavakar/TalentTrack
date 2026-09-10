@@ -33,10 +33,10 @@ class DatabaseSeeder extends Seeder
         // DEV-ONLY credentials (password: "password"). Change or remove
         // before any shared/staging/production deploy.
         User::firstOrCreate(
-            ['email' => 'admin@talenttracktech.local'],
+            ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Talent Track Admin',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('123456789'),
                 'role' => 'admin',
                 'email_verified_at' => now(),
             ]
