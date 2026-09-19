@@ -122,6 +122,68 @@
   margin-top: auto;
 }
 
+/* ---------- CourseCarousel ---------- */
+.course-carousel {
+  position: relative;
+}
+.course-carousel__track {
+  display: flex;
+  gap: var(--space-6);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--space-2) var(--space-2) var(--space-6);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.course-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+.course-carousel__slide {
+  flex: 0 0 auto;
+  width: 320px;
+  scroll-snap-align: start;
+}
+.course-carousel__arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--navy-900);
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard),
+    transform var(--duration-base) var(--ease-standard);
+}
+.course-carousel__arrow:hover {
+  background: var(--navy-900);
+  color: var(--white);
+  transform: translateY(-50%) scale(1.06);
+}
+.course-carousel__arrow--prev {
+  left: -22px;
+}
+.course-carousel__arrow--next {
+  right: -22px;
+}
+
+@media (max-width: 900px) {
+  .course-carousel__arrow {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .course-carousel__slide {
+    width: 84vw;
+  }
+}
+
 /* ---------- PlacementCard ---------- */
 .placement-card {
   background: var(--surface);

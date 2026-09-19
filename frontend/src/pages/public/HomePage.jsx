@@ -12,10 +12,10 @@ import {
 import Hero from "../../components/marketing/Hero";
 import SectionTitle from "../../components/ui/SectionTitle";
 import ServiceCard from "../../components/cards/ServiceCard";
-import CourseCard from "../../components/cards/CourseCard";
 import TestimonialCard from "../../components/cards/TestimonialCard";
 import StatsCard from "../../components/cards/StatsCard";
 import WhyChooseUs from "../../components/marketing/WhyChooseUs";
+import CourseCarousel from "../../components/marketing/CourseCarousel";
 import CTASection from "../../components/marketing/CTASection";
 import useFetch from "../../hooks/useFetch";
 import useSeo from "../../hooks/useSeo";
@@ -79,8 +79,12 @@ export default function HomePage() {
   const { data: banners } = useFetch("/banners");
   const { data: statistics } = useFetch("/statistics");
   const { data: testimonials } = useFetch("/testimonials?featured=1");
-  const { data: courseData } = useFetch("/courses?featured=1&per_page=3");
-  const featuredCourses = courseData?.items || [];
+  // Every active course, not just the featured ones — CourseCarousel is a
+  // horizontally scrollable strip rather than a fixed 3-card grid, so
+  // there's no reason to cap this to a "sample" anymore. per_page is just
+  // generous headroom above the current catalog size.
+  const { data: courseData } = useFetch("/courses?per_page=24");
+  const allCourses = courseData?.items || [];
   // The "Why Choose Us" grid is admin-managed from the About Page Content
   // screen (see WhyChooseUs.jsx's docblock) but shown here too — same
   // `/page-sections?page=about` request AboutPage.jsx makes.
@@ -118,30 +122,26 @@ export default function HomePage() {
         </section>
       )}
 
-      {featuredCourses.length > 0 && (
+      {allCourses.length > 0 && (
         <section className="section">
           <div className="container">
             <SectionTitle
               eyebrow="Training"
-              title="Featured training programs"
-              subtitle="A sample of our industry-oriented courses — see the full list on the Training page."
+              title="Our training programs"
+              subtitle="Browse our full range of industry-oriented courses — swipe or use the arrows to see more."
               align="center"
             />
-            <div className="card-grid">
-              {featuredCourses.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  course={{
-                    title: course.title,
-                    category: course.category?.name,
-                    shortDescription: course.short_description,
-                    duration: course.duration,
-                    mode: course.mode,
-                    slug: course.slug,
-                  }}
-                />
-              ))}
-            </div>
+            <CourseCarousel
+              courses={allCourses.map((course) => ({
+                id: course.id,
+                title: course.title,
+                category: course.category?.name,
+                shortDescription: course.short_description,
+                duration: course.duration,
+                mode: course.mode,
+                slug: course.slug,
+              }))}
+            />
           </div>
         </section>
       )}
