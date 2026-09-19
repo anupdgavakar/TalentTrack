@@ -45,9 +45,9 @@ export const PAGE_SECTION_KEYS = {
     {
       key: "why_choose_us_intro",
       label: "“Why Choose Us?” section heading",
-      hint: "The heading shown above the Why Choose Us grid. This same section also appears on the homepage.",
+      hint: "The heading shown above the Why Choose Us grid, plus an optional background photo. Upload an industry-relevant photo and it replaces the plain green background with that photo (tinted green so the heading and cards stay readable) and a fixed \"parallax\" scroll effect. Leave it unset to keep the plain green background. This same section also appears on the homepage.",
       singleton: true,
-      fields: ["title"],
+      fields: ["title", "image"],
     },
     {
       key: "why_choose_us_item",

@@ -21,6 +21,14 @@ import { findSection, listSection } from "../../utils/pageSectionKeys";
  * `sections` is whatever a page already fetched from
  * `/page-sections?page=about` — pass it straight through rather than
  * fetching again here. Renders nothing until at least one item exists.
+ *
+ * `why_choose_us_intro`'s optional `image` becomes this section's
+ * background photo instead of the plain green gradient — see the
+ * `why-choose-us--has-bg` rule in base.css for the tinted-overlay +
+ * `background-attachment: fixed` "parallax" treatment (the image stays put
+ * while the page scrolls past it) and why that's turned off on touch
+ * devices. No image set (the default) falls back to the plain
+ * `section--green` background exactly as before.
  */
 export default function WhyChooseUs({ sections }) {
   const intro = findSection(sections, "why_choose_us_intro");
@@ -30,8 +38,13 @@ export default function WhyChooseUs({ sections }) {
     return null;
   }
 
+  const bgStyle = intro?.image ? { "--why-choose-us-bg-image": `url(${intro.image})` } : undefined;
+
   return (
-    <section className="section section--green">
+    <section
+      className={`section section--green${intro?.image ? " why-choose-us--has-bg" : ""}`}
+      style={bgStyle}
+    >
       <div className="container">
         <SectionTitle title={intro?.title || "Why Choose Us?"} align="center" />
         <div className="why-choose-us-grid">
