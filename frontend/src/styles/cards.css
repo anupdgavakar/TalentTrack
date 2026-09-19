@@ -79,42 +79,98 @@
   box-shadow: var(--shadow-md);
   transform: translateY(-3px);
 }
+
+/* Colorful header band — either the course's own uploaded photo (with a
+   brand-color tint over it, same reasoning as the Why Choose Us background
+   photo: keeps it on-brand and keeps the badge text legible over any
+   image) or, with no photo set, a flat brand-gradient placeholder so the
+   card is never just an empty gray box. The four variants reuse the exact
+   gradient pairs already established by why-choose-us-item's icon badges,
+   picked per-course by CourseCard's title hash — see that component for
+   why this isn't nth-child-based. */
+.course-card__header {
+  position: relative;
+  height: 132px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-4);
+  background-size: cover;
+  background-position: center;
+}
+.course-card__header--variant-0 {
+  background-image: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
+}
+.course-card__header--variant-1 {
+  background-image: var(--gradient-green);
+}
+.course-card__header--variant-2 {
+  background-image: linear-gradient(135deg, var(--navy-800) 0%, var(--blue-600) 100%);
+}
+.course-card__header--variant-3 {
+  background-image: linear-gradient(135deg, var(--green-500) 0%, var(--lime-400) 100%);
+}
+/* A photo replaces the flat gradient with the image itself, tinted by the
+   same variant gradient (as a translucent layer) rather than shown plain —
+   keeps every card reading as one colorful, on-brand set instead of a mix
+   of whatever colors happen to be in each uploaded photo. */
+.course-card__header--photo.course-card__header--variant-0 {
+  background-image: linear-gradient(135deg, rgba(25, 72, 179, 0.72) 0%, rgba(49, 112, 240, 0.6) 100%), var(--course-card-bg-image);
+}
+.course-card__header--photo.course-card__header--variant-1 {
+  background-image: linear-gradient(135deg, rgba(31, 157, 79, 0.72) 0%, rgba(143, 226, 63, 0.6) 100%), var(--course-card-bg-image);
+}
+.course-card__header--photo.course-card__header--variant-2 {
+  background-image: linear-gradient(135deg, rgba(16, 42, 82, 0.75) 0%, rgba(33, 89, 209, 0.6) 100%), var(--course-card-bg-image);
+}
+.course-card__header--photo.course-card__header--variant-3 {
+  background-image: linear-gradient(135deg, rgba(43, 191, 98, 0.72) 0%, rgba(143, 226, 63, 0.6) 100%), var(--course-card-bg-image);
+}
+.course-card__header-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.course-card__badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-heading);
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-full);
+}
+
 .course-card__body {
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
-.course-card__category {
-  display: inline-block;
-  align-self: flex-start;
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  color: var(--blue-600);
-  background: var(--blue-100);
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-full);
-  margin-bottom: var(--space-3);
-}
 .course-card p {
   color: var(--text-muted);
   font-size: var(--fs-sm);
-  flex-grow: 1;
 }
-.course-card__meta {
+.course-card__checklist {
   display: flex;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-  font-size: var(--fs-xs);
-  color: var(--text-muted);
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--text-body);
   margin: var(--space-4) 0;
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
+  flex-grow: 1;
 }
-.course-card__meta-item {
-  display: inline-flex;
+.course-card__checklist li {
+  display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
+}
+.course-card__checklist li svg {
+  flex-shrink: 0;
+  color: var(--green-600);
 }
 .course-card__actions {
   display: flex;

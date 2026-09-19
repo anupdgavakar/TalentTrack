@@ -95,9 +95,12 @@ export default function TrainingPage() {
                     course={{
                       title: course.title,
                       category: course.category?.name,
+                      level: course.level,
                       shortDescription: course.short_description,
                       duration: course.duration,
                       mode: course.mode,
+                      fee: course.fee,
+                      imageUrl: course.image_url,
                       slug: course.slug,
                     }}
                   />
