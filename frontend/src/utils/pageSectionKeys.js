@@ -57,9 +57,16 @@ export const PAGE_SECTION_KEYS = {
       fields: ["icon", "title"],
     },
     {
+      key: "logo_marquee_intro",
+      label: "Company strip heading",
+      hint: "The eyebrow, heading and subtitle shown above the scrolling company strip on the homepage. Keep the wording general (e.g. the industry/skills your training targets) — this strip is not a claim that the listed companies are confirmed hiring partners unless they actually are.",
+      singleton: true,
+      fields: ["title", "subtitle"],
+    },
+    {
       key: "hiring_partner_logo",
-      label: "Hiring partner logo",
-      hint: "One company logo shown in the scrolling “Hiring Partners” strip on the homepage. Upload a logo image and the company name (used as its alt text) — the strip only appears once at least one logo is added.",
+      label: "Featured company",
+      hint: "One company shown in the scrolling strip on the homepage — a name is enough; add a logo image too if you have the rights to use it. Use this for real hiring partners as well as well-known employers in the industry your training targets — just make sure the heading above (“Company strip heading”) doesn't claim more of a relationship than actually exists. The strip only appears once at least one entry is added.",
       singleton: false,
       fields: ["image", "title"],
     },

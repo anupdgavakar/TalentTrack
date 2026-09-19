@@ -83,6 +83,35 @@ class PageSectionSeeder extends Seeder
             $this->row('about', 'why_choose_us_item', $i, $item);
         }
 
+        // Scrolling company strip on the homepage (LogoMarquee.jsx). The
+        // heading is deliberately framed around the *skills/industry* the
+        // training targets, not a claim that every listed company has hired
+        // graduates or has a formal agreement with Talent Track
+        // Technologies — see the entries below, which are text-only
+        // (no logo files, since we don't hold rights to these companies'
+        // marks) major IT employers in India, shown as context for the
+        // kind of roles this training prepares candidates for. If/when a
+        // genuine hiring partner signs on, add them the same way and
+        // upload their logo from the admin panel — the component renders
+        // a logo image automatically once one is set on a row.
+        $this->row('about', 'logo_marquee_intro', 0, [
+            'title' => 'Top IT Companies Hiring in India',
+            'subtitle' => 'Our training is built around the skills these companies are actively hiring for.',
+        ]);
+
+        $topItCompanies = [
+            'Tata Consultancy Services (TCS)', 'Infosys', 'HCLTech', 'Wipro', 'Tech Mahindra', 'LTIMindtree',
+            'Cognizant', 'Capgemini India', 'Accenture in India', 'IBM India', 'Oracle India', 'Microsoft India',
+            'Mphasis', 'Persistent Systems', 'Hexaware Technologies', 'Coforge', 'Birlasoft', 'Cyient',
+            'KPIT Technologies', 'Zensar Technologies', 'Sonata Software', 'L&T Technology Services (LTTS)',
+            'Happiest Minds Technologies', 'Firstsource Solutions', 'Intellect Design Arena',
+            'Oracle Financial Services Software (OFSS)', 'Sasken Technologies', 'Newgen Software',
+            'Ramco Systems', '3i Infotech',
+        ];
+        foreach ($topItCompanies as $i => $name) {
+            $this->row('about', 'hiring_partner_logo', $i, ['title' => $name]);
+        }
+
         $this->row('about', 'approach_intro', 0, [
             'title' => 'Outcomes over certificates',
         ]);

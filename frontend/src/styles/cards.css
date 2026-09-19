@@ -479,6 +479,25 @@
 .logo-marquee__logo:hover img {
   filter: none;
 }
+/* Name-only entries (no logo file uploaded) render as a text pill instead
+   of a fixed image box — width is content-driven rather than the 150px
+   logo slot, since company names vary a lot more in length than logos. */
+.logo-marquee__logo--text {
+  width: auto;
+  height: auto;
+  min-height: 64px;
+  padding: var(--space-3) var(--space-5);
+  white-space: nowrap;
+}
+.logo-marquee__logo--text span {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: color var(--duration-base) var(--ease-standard);
+}
+.logo-marquee__logo--text:hover span {
+  color: var(--text-heading);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .logo-marquee__track {
