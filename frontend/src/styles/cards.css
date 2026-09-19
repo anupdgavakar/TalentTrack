@@ -143,41 +143,31 @@
   width: 320px;
   scroll-snap-align: start;
 }
-.course-carousel__arrow {
-  position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-full);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-md);
+.course-carousel__dots {
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: var(--navy-900);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+.course-carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--border-strong);
   cursor: pointer;
-  transition: background var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard),
-    transform var(--duration-base) var(--ease-standard);
+  padding: 0;
+  transition: background var(--duration-base) var(--ease-standard), width var(--duration-base) var(--ease-standard);
 }
-.course-carousel__arrow:hover {
-  background: var(--navy-900);
-  color: var(--white);
-  transform: translateY(-50%) scale(1.06);
+.course-carousel__dot:hover {
+  background: var(--blue-500);
 }
-.course-carousel__arrow--prev {
-  left: -22px;
-}
-.course-carousel__arrow--next {
-  right: -22px;
+.course-carousel__dot.is-active {
+  background: var(--gradient-green);
+  width: 22px;
 }
 
-@media (max-width: 900px) {
-  .course-carousel__arrow {
-    display: none;
-  }
-}
 @media (max-width: 640px) {
   .course-carousel__slide {
     width: 84vw;
