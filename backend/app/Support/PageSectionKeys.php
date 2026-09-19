@@ -22,6 +22,8 @@ class PageSectionKeys
         'about' => [
             'hero',
             'intro',
+            'why_choose_us_intro',
+            'why_choose_us_item',
             'approach_intro',
             'approach_card',
             'who_we_work_with_intro',

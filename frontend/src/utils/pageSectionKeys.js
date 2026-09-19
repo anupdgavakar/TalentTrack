@@ -43,6 +43,20 @@ export const PAGE_SECTION_KEYS = {
       fields: ["body", "image"],
     },
     {
+      key: "why_choose_us_intro",
+      label: "“Why Choose Us?” section heading",
+      hint: "The heading shown above the Why Choose Us grid. This same section also appears on the homepage.",
+      singleton: true,
+      fields: ["title"],
+    },
+    {
+      key: "why_choose_us_item",
+      label: "Why Choose Us item",
+      hint: "One icon + label shown in the Why Choose Us grid (e.g. “Mock Interviews”). Shown on both the homepage and this page.",
+      singleton: false,
+      fields: ["icon", "title"],
+    },
+    {
       key: "approach_intro",
       label: "“Our Approach” section heading",
       hint: "The heading shown above the four approach cards.",

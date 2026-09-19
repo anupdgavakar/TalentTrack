@@ -144,6 +144,16 @@ textarea:focus-visible,
   color: var(--white);
 }
 
+.section--green {
+  background: var(--gradient-green);
+}
+
+.section--green h1,
+.section--green h2,
+.section--green h3 {
+  color: var(--white);
+}
+
 /* Visually hidden but still readable by screen readers — used for icon-only
    controls (e.g. the header's mobile logout button) that need an
    accessible name without visible label text. */

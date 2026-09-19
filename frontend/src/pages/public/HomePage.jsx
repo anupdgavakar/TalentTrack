@@ -3,16 +3,11 @@ import {
   Briefcase,
   Users,
   Compass,
-  Target,
-  Handshake,
-  TrendingUp,
-  Building2,
   UserPlus,
   ClipboardCheck,
   BookOpenCheck,
   Search,
   MessagesSquare,
-  Award,
 } from "lucide-react";
 import Hero from "../../components/marketing/Hero";
 import SectionTitle from "../../components/ui/SectionTitle";
@@ -20,6 +15,7 @@ import ServiceCard from "../../components/cards/ServiceCard";
 import CourseCard from "../../components/cards/CourseCard";
 import TestimonialCard from "../../components/cards/TestimonialCard";
 import StatsCard from "../../components/cards/StatsCard";
+import WhyChooseUs from "../../components/marketing/WhyChooseUs";
 import CTASection from "../../components/marketing/CTASection";
 import useFetch from "../../hooks/useFetch";
 import useSeo from "../../hooks/useSeo";
@@ -60,39 +56,6 @@ const SERVICES = [
   },
 ];
 
-const WHY_US = [
-  {
-    icon: Target,
-    title: "Industry-oriented training",
-    description: "Curriculum shaped by what employers are actually hiring for right now.",
-  },
-  {
-    icon: Award,
-    title: "Career-focused programs",
-    description: "Every course maps to a real job role, not just a certificate.",
-  },
-  {
-    icon: Briefcase,
-    title: "Placement assistance",
-    description: "Structured support from resume to interview to offer.",
-  },
-  {
-    icon: Handshake,
-    title: "Professional guidance",
-    description: "Dedicated counsellors track your progress, not just your enrollment.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Skill development",
-    description: "Practical, hands-on learning designed for retention, not just completion.",
-  },
-  {
-    icon: Building2,
-    title: "Employer connections",
-    description: "A growing network of hiring partners across industries.",
-  },
-];
-
 const PROCESS_STEPS = [
   { icon: UserPlus, title: "Register / Enquire", description: "Tell us your goal — training, a job, or hiring support." },
   { icon: ClipboardCheck, title: "Profile Assessment", description: "We assess your current skills and target role." },
@@ -118,6 +81,10 @@ export default function HomePage() {
   const { data: testimonials } = useFetch("/testimonials?featured=1");
   const { data: courseData } = useFetch("/courses?featured=1&per_page=3");
   const featuredCourses = courseData?.items || [];
+  // The "Why Choose Us" grid is admin-managed from the About Page Content
+  // screen (see WhyChooseUs.jsx's docblock) but shown here too — same
+  // `/page-sections?page=about` request AboutPage.jsx makes.
+  const { data: aboutSections } = useFetch("/page-sections?page=about");
 
   return (
     <>
@@ -179,26 +146,7 @@ export default function HomePage() {
         </section>
       )}
 
-      <section className="section section--subtle">
-        <div className="container">
-          <SectionTitle
-            eyebrow="Why Talent Track Technologies"
-            title="Built around outcomes, not just enrollment"
-            align="center"
-          />
-          <div className="card-grid">
-            {WHY_US.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="service-card">
-                <div className="service-card__icon">
-                  <Icon size={26} aria-hidden="true" />
-                </div>
-                <h3>{title}</h3>
-                <p>{description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhyChooseUs sections={aboutSections} />
 
       <section className="section">
         <div className="container">

@@ -1,0 +1,398 @@
+diff --git a/backend/app/Support/PageSectionKeys.php b/backend/app/Support/PageSectionKeys.php
+index 97cdaf6..dbd0b69 100644
+--- a/backend/app/Support/PageSectionKeys.php
++++ b/backend/app/Support/PageSectionKeys.php
+@@ -22,6 +22,8 @@ class PageSectionKeys
+         'about' => [
+             'hero',
+             'intro',
++            'why_choose_us_intro',
++            'why_choose_us_item',
+             'approach_intro',
+             'approach_card',
+             'who_we_work_with_intro',
+diff --git a/backend/database/seeders/PageSectionSeeder.php b/backend/database/seeders/PageSectionSeeder.php
+index 2c30f51..490e581 100644
+--- a/backend/database/seeders/PageSectionSeeder.php
++++ b/backend/database/seeders/PageSectionSeeder.php
+@@ -61,6 +61,28 @@ private function seedAbout(): void
+                 .'next.',
+         ]);
+ 
++        // "Why Choose Us?" — rendered on both the homepage and the About
++        // page (see frontend WhyChooseUs.jsx), but managed from this one
++        // spot on the About Content admin screen so there's a single list
++        // to keep up to date rather than two.
++        $this->row('about', 'why_choose_us_intro', 0, [
++            'title' => 'Why Choose Us?',
++        ]);
++
++        $whyChooseUsItems = [
++            ['icon' => 'FolderKanban', 'title' => 'Live Industry Projects'],
++            ['icon' => 'MessagesSquare', 'title' => 'Mock Interviews'],
++            ['icon' => 'FileCheck2', 'title' => 'ATS-Optimized Resume'],
++            ['icon' => 'IndianRupee', 'title' => 'Pay After Placement'],
++            ['icon' => 'UserCheck', 'title' => 'Dedicated Placement Team'],
++            ['icon' => 'PlayCircle', 'title' => 'Free Demo Sessions'],
++            ['icon' => 'Briefcase', 'title' => '100% Job Assistance'],
++            ['icon' => 'IdCard', 'title' => 'LinkedIn Profile Optimization'],
++        ];
++        foreach ($whyChooseUsItems as $i => $item) {
++            $this->row('about', 'why_choose_us_item', $i, $item);
++        }
++
+         $this->row('about', 'approach_intro', 0, [
+             'title' => 'Outcomes over certificates',
+         ]);
+diff --git a/frontend/src/components/marketing/WhyChooseUs.jsx b/frontend/src/components/marketing/WhyChooseUs.jsx
+new file mode 100644
+index 0000000..999db45
+--- /dev/null
++++ b/frontend/src/components/marketing/WhyChooseUs.jsx
+@@ -0,0 +1,50 @@
++import SectionTitle from "../ui/SectionTitle";
++import getIcon from "../../utils/iconMap";
++import { findSection, listSection } from "../../utils/pageSectionKeys";
++
++/**
++ * The "Why Choose Us?" green-gradient band with a white card of icon+label
++ * items. Rendered on both HomePage and AboutPage, but the content is
++ * admin-managed from a single spot — the About Page Content screen — via
++ * the `why_choose_us_intro` (singleton title) and `why_choose_us_item`
++ * (repeatable icon+title) section keys. See pageSectionKeys.js for why
++ * these keys live under the `about` page group even though this component
++ * is also used from the homepage: it's one list of company-wide selling
++ * points, not page-specific copy, so there's no reason to make an admin
++ * maintain it twice.
++ *
++ * `sections` is whatever a page already fetched from
++ * `/page-sections?page=about` — pass it straight through rather than
++ * fetching again here. Renders nothing until at least one item exists.
++ */
++export default function WhyChooseUs({ sections }) {
++  const intro = findSection(sections, "why_choose_us_intro");
++  const items = listSection(sections, "why_choose_us_item");
++
++  if (items.length === 0) {
++    return null;
++  }
++
++  return (
++    <section className="section section--green">
++      <div className="container">
++        <SectionTitle title={intro?.title || "Why Choose Us?"} align="center" />
++        <div className="why-choose-us-panel">
++          <div className="why-choose-us-grid">
++            {items.map((item) => {
++              const Icon = getIcon(item.icon);
++              return (
++                <div className="why-choose-us-item" key={item.id}>
++                  <span className="why-choose-us-item__icon">
++                    <Icon size={22} aria-hidden="true" />
++                  </span>
++                  <span className="why-choose-us-item__label">{item.title}</span>
++                </div>
++              );
++            })}
++          </div>
++        </div>
++      </div>
++    </section>
++  );
++}
+diff --git a/frontend/src/pages/public/AboutPage.jsx b/frontend/src/pages/public/AboutPage.jsx
+index 506919b..783ee12 100644
+--- a/frontend/src/pages/public/AboutPage.jsx
++++ b/frontend/src/pages/public/AboutPage.jsx
+@@ -3,6 +3,7 @@ import Breadcrumb from "../../components/ui/Breadcrumb";
+ import SectionTitle from "../../components/ui/SectionTitle";
+ import ServiceCard from "../../components/cards/ServiceCard";
+ import StatsCard from "../../components/cards/StatsCard";
++import WhyChooseUs from "../../components/marketing/WhyChooseUs";
+ import CTASection from "../../components/marketing/CTASection";
+ import useFetch from "../../hooks/useFetch";
+ import useSeo from "../../hooks/useSeo";
+@@ -185,6 +186,8 @@ export default function AboutPage() {
+         </div>
+       </section>
+ 
++      <WhyChooseUs sections={sections} />
++
+       <section className="section section--subtle">
+         <div className="container">
+           <SectionTitle eyebrow="Our Approach" title={approachIntro.title} align="center" />
+diff --git a/frontend/src/pages/public/HomePage.jsx b/frontend/src/pages/public/HomePage.jsx
+index 092ea27..25fdc9b 100644
+--- a/frontend/src/pages/public/HomePage.jsx
++++ b/frontend/src/pages/public/HomePage.jsx
+@@ -3,16 +3,11 @@ import {
+   Briefcase,
+   Users,
+   Compass,
+-  Target,
+-  Handshake,
+-  TrendingUp,
+-  Building2,
+   UserPlus,
+   ClipboardCheck,
+   BookOpenCheck,
+   Search,
+   MessagesSquare,
+-  Award,
+ } from "lucide-react";
+ import Hero from "../../components/marketing/Hero";
+ import SectionTitle from "../../components/ui/SectionTitle";
+@@ -20,6 +15,7 @@ import ServiceCard from "../../components/cards/ServiceCard";
+ import CourseCard from "../../components/cards/CourseCard";
+ import TestimonialCard from "../../components/cards/TestimonialCard";
+ import StatsCard from "../../components/cards/StatsCard";
++import WhyChooseUs from "../../components/marketing/WhyChooseUs";
+ import CTASection from "../../components/marketing/CTASection";
+ import useFetch from "../../hooks/useFetch";
+ import useSeo from "../../hooks/useSeo";
+@@ -60,39 +56,6 @@ const SERVICES = [
+   },
+ ];
+ 
+-const WHY_US = [
+-  {
+-    icon: Target,
+-    title: "Industry-oriented training",
+-    description: "Curriculum shaped by what employers are actually hiring for right now.",
+-  },
+-  {
+-    icon: Award,
+-    title: "Career-focused programs",
+-    description: "Every course maps to a real job role, not just a certificate.",
+-  },
+-  {
+-    icon: Briefcase,
+-    title: "Placement assistance",
+-    description: "Structured support from resume to interview to offer.",
+-  },
+-  {
+-    icon: Handshake,
+-    title: "Professional guidance",
+-    description: "Dedicated counsellors track your progress, not just your enrollment.",
+-  },
+-  {
+-    icon: TrendingUp,
+-    title: "Skill development",
+-    description: "Practical, hands-on learning designed for retention, not just completion.",
+-  },
+-  {
+-    icon: Building2,
+-    title: "Employer connections",
+-    description: "A growing network of hiring partners across industries.",
+-  },
+-];
+-
+ const PROCESS_STEPS = [
+   { icon: UserPlus, title: "Register / Enquire", description: "Tell us your goal — training, a job, or hiring support." },
+   { icon: ClipboardCheck, title: "Profile Assessment", description: "We assess your current skills and target role." },
+@@ -118,6 +81,10 @@ export default function HomePage() {
+   const { data: testimonials } = useFetch("/testimonials?featured=1");
+   const { data: courseData } = useFetch("/courses?featured=1&per_page=3");
+   const featuredCourses = courseData?.items || [];
++  // The "Why Choose Us" grid is admin-managed from the About Page Content
++  // screen (see WhyChooseUs.jsx's docblock) but shown here too — same
++  // `/page-sections?page=about` request AboutPage.jsx makes.
++  const { data: aboutSections } = useFetch("/page-sections?page=about");
+ 
+   return (
+     <>
+@@ -179,26 +146,7 @@ export default function HomePage() {
+         </section>
+       )}
+ 
+-      <section className="section section--subtle">
+-        <div className="container">
+-          <SectionTitle
+-            eyebrow="Why Talent Track Technologies"
+-            title="Built around outcomes, not just enrollment"
+-            align="center"
+-          />
+-          <div className="card-grid">
+-            {WHY_US.map(({ icon: Icon, title, description }) => (
+-              <div key={title} className="service-card">
+-                <div className="service-card__icon">
+-                  <Icon size={26} aria-hidden="true" />
+-                </div>
+-                <h3>{title}</h3>
+-                <p>{description}</p>
+-              </div>
+-            ))}
+-          </div>
+-        </div>
+-      </section>
++      <WhyChooseUs sections={aboutSections} />
+ 
+       <section className="section">
+         <div className="container">
+diff --git a/frontend/src/styles/base.css b/frontend/src/styles/base.css
+index 5c8a6ba..b2f3220 100644
+--- a/frontend/src/styles/base.css
++++ b/frontend/src/styles/base.css
+@@ -144,6 +144,16 @@ textarea:focus-visible,
+   color: var(--white);
+ }
+ 
++.section--green {
++  background: var(--gradient-green);
++}
++
++.section--green h1,
++.section--green h2,
++.section--green h3 {
++  color: var(--white);
++}
++
+ /* Visually hidden but still readable by screen readers — used for icon-only
+    controls (e.g. the header's mobile logout button) that need an
+    accessible name without visible label text. */
+diff --git a/frontend/src/styles/cards.css b/frontend/src/styles/cards.css
+index c14d9e7..a73ff2a 100644
+--- a/frontend/src/styles/cards.css
++++ b/frontend/src/styles/cards.css
+@@ -305,6 +305,63 @@
+     grid-template-columns: repeat(2, 1fr);
+   }
+ }
++
++/* ---------- WhyChooseUs ---------- */
++.why-choose-us-panel {
++  background: var(--surface);
++  border-radius: var(--radius-lg);
++  box-shadow: var(--shadow-lg);
++  padding: var(--space-4) var(--space-8);
++}
++.why-choose-us-grid {
++  display: grid;
++  grid-template-columns: repeat(2, 1fr);
++}
++.why-choose-us-item {
++  display: flex;
++  align-items: center;
++  gap: var(--space-4);
++  padding: var(--space-5) var(--space-4);
++  border-bottom: 1px solid var(--border);
++}
++.why-choose-us-item:nth-child(odd) {
++  border-right: 1px solid var(--border);
++}
++.why-choose-us-item:nth-last-child(-n + 2) {
++  border-bottom: none;
++}
++.why-choose-us-item__icon {
++  flex-shrink: 0;
++  width: 48px;
++  height: 48px;
++  border-radius: var(--radius-full);
++  background: var(--green-100);
++  color: var(--green-600);
++  display: flex;
++  align-items: center;
++  justify-content: center;
++}
++.why-choose-us-item__label {
++  font-weight: 600;
++  color: var(--text-heading);
++}
++
++@media (max-width: 640px) {
++  .why-choose-us-panel {
++    padding: var(--space-2) var(--space-4);
++  }
++  .why-choose-us-grid {
++    grid-template-columns: 1fr;
++  }
++  .why-choose-us-item {
++    border-right: none !important;
++    border-bottom: 1px solid var(--border) !important;
++  }
++  .why-choose-us-item:last-child {
++    border-bottom: none !important;
++  }
++}
++
+ @media (max-width: 640px) {
+   .job-card {
+     flex-direction: column;
+diff --git a/frontend/src/styles/components.css b/frontend/src/styles/components.css
+index a7bff7e..e643e80 100644
+--- a/frontend/src/styles/components.css
++++ b/frontend/src/styles/components.css
+@@ -142,6 +142,13 @@
+ .section--dark .section-title__subtitle {
+   color: var(--text-on-dark-muted);
+ }
++.section--green .section-title__eyebrow {
++  color: var(--green-600);
++  background: var(--white);
++}
++.section--green .section-title__subtitle {
++  color: rgba(255, 255, 255, 0.85);
++}
+ 
+ /* ---------- Alert ---------- */
+ .alert {
+diff --git a/frontend/src/utils/iconMap.js b/frontend/src/utils/iconMap.js
+index c686f80..ec4746a 100644
+--- a/frontend/src/utils/iconMap.js
++++ b/frontend/src/utils/iconMap.js
+@@ -15,6 +15,13 @@ import {
+   BarChart3,
+   ClipboardCheck,
+   Search,
++  FolderKanban,
++  MessagesSquare,
++  FileCheck2,
++  IndianRupee,
++  UserCheck,
++  PlayCircle,
++  IdCard,
+ } from "lucide-react";
+ 
+ const ICONS = {
+@@ -37,6 +44,16 @@ const ICONS = {
+   // Page Content, ...) picks from one consistent, growing set.
+   ClipboardCheck,
+   Search,
++  // Added for the admin-editable "Why Choose Us" grid (see
++  // PageSectionSeeder's why_choose_us_item rows) — same shared map as
++  // above, for the same reason.
++  FolderKanban,
++  MessagesSquare,
++  FileCheck2,
++  IndianRupee,
++  UserCheck,
++  PlayCircle,
++  IdCard,
+ };
+ 
+ /**
+diff --git a/frontend/src/utils/pageSectionKeys.js b/frontend/src/utils/pageSectionKeys.js
+index 3c4ee4b..51e7302 100644
+--- a/frontend/src/utils/pageSectionKeys.js
++++ b/frontend/src/utils/pageSectionKeys.js
+@@ -42,6 +42,20 @@ export const PAGE_SECTION_KEYS = {
+       singleton: true,
+       fields: ["body", "image"],
+     },
++    {
++      key: "why_choose_us_intro",
++      label: "“Why Choose Us?” section heading",
++      hint: "The heading shown above the Why Choose Us grid. This same section also appears on the homepage.",
++      singleton: true,
++      fields: ["title"],
++    },
++    {
++      key: "why_choose_us_item",
++      label: "Why Choose Us item",
++      hint: "One icon + label shown in the Why Choose Us grid (e.g. “Mock Interviews”). Shown on both the homepage and this page.",
++      singleton: false,
++      fields: ["icon", "title"],
++    },
+     {
+       key: "approach_intro",
+       label: "“Our Approach” section heading",

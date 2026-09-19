@@ -15,6 +15,13 @@ import {
   BarChart3,
   ClipboardCheck,
   Search,
+  FolderKanban,
+  MessagesSquare,
+  FileCheck2,
+  IndianRupee,
+  UserCheck,
+  PlayCircle,
+  IdCard,
 } from "lucide-react";
 
 const ICONS = {
@@ -37,6 +44,16 @@ const ICONS = {
   // Page Content, ...) picks from one consistent, growing set.
   ClipboardCheck,
   Search,
+  // Added for the admin-editable "Why Choose Us" grid (see
+  // PageSectionSeeder's why_choose_us_item rows) — same shared map as
+  // above, for the same reason.
+  FolderKanban,
+  MessagesSquare,
+  FileCheck2,
+  IndianRupee,
+  UserCheck,
+  PlayCircle,
+  IdCard,
 };
 
 /**

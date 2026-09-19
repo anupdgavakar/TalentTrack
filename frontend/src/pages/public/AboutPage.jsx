@@ -3,6 +3,7 @@ import Breadcrumb from "../../components/ui/Breadcrumb";
 import SectionTitle from "../../components/ui/SectionTitle";
 import ServiceCard from "../../components/cards/ServiceCard";
 import StatsCard from "../../components/cards/StatsCard";
+import WhyChooseUs from "../../components/marketing/WhyChooseUs";
 import CTASection from "../../components/marketing/CTASection";
 import useFetch from "../../hooks/useFetch";
 import useSeo from "../../hooks/useSeo";
@@ -184,6 +185,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <WhyChooseUs sections={sections} />
 
       <section className="section section--subtle">
         <div className="container">

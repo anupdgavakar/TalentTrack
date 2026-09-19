@@ -33,10 +33,10 @@ class DatabaseSeeder extends Seeder
         // DEV-ONLY credentials (password: "password"). Change or remove
         // before any shared/staging/production deploy.
         User::firstOrCreate(
-            ['email' => 'admin@gmail.com'],
+            ['email' => 'admin@talenttracktech.local'],
             [
                 'name' => 'Talent Track Admin',
-                'password' => Hash::make('123456789'),
+                'password' => Hash::make('password'),
                 'role' => 'admin',
                 'email_verified_at' => now(),
             ]
@@ -231,5 +231,10 @@ class DatabaseSeeder extends Seeder
         // against an already-live production database. See
         // PageSectionSeeder's own docblock for why.
         $this->call(PageSectionSeeder::class);
+
+        // ---- Real Training-section course catalog — same "also runs
+        // standalone against production" reasoning as PageSectionSeeder.
+        // See CourseCatalogSeeder's own docblock.
+        $this->call(CourseCatalogSeeder::class);
     }
 }

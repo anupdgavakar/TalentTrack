@@ -61,6 +61,28 @@ class PageSectionSeeder extends Seeder
                 .'next.',
         ]);
 
+        // "Why Choose Us?" — rendered on both the homepage and the About
+        // page (see frontend WhyChooseUs.jsx), but managed from this one
+        // spot on the About Content admin screen so there's a single list
+        // to keep up to date rather than two.
+        $this->row('about', 'why_choose_us_intro', 0, [
+            'title' => 'Why Choose Us?',
+        ]);
+
+        $whyChooseUsItems = [
+            ['icon' => 'FolderKanban', 'title' => 'Live Industry Projects'],
+            ['icon' => 'MessagesSquare', 'title' => 'Mock Interviews'],
+            ['icon' => 'FileCheck2', 'title' => 'ATS-Optimized Resume'],
+            ['icon' => 'IndianRupee', 'title' => 'Pay After Placement'],
+            ['icon' => 'UserCheck', 'title' => 'Dedicated Placement Team'],
+            ['icon' => 'PlayCircle', 'title' => 'Free Demo Sessions'],
+            ['icon' => 'Briefcase', 'title' => '100% Job Assistance'],
+            ['icon' => 'IdCard', 'title' => 'LinkedIn Profile Optimization'],
+        ];
+        foreach ($whyChooseUsItems as $i => $item) {
+            $this->row('about', 'why_choose_us_item', $i, $item);
+        }
+
         $this->row('about', 'approach_intro', 0, [
             'title' => 'Outcomes over certificates',
         ]);
