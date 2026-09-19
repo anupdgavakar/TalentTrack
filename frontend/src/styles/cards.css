@@ -419,6 +419,79 @@
   color: var(--text-heading);
 }
 
+/* ---------- LogoMarquee ---------- */
+.logo-marquee {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+.logo-marquee__row {
+  overflow: hidden;
+  /* Fades the row out at both edges instead of hard-cropping a logo
+     mid-scroll — the "classy" touch that makes an infinite loop read as
+     intentional rather than a clipped marquee. */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+.logo-marquee__track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  width: max-content;
+  animation: logo-marquee-scroll var(--marquee-duration, 30s) linear infinite;
+}
+.logo-marquee__row--reverse .logo-marquee__track {
+  animation-direction: reverse;
+}
+.logo-marquee__row:hover .logo-marquee__track {
+  animation-play-state: paused;
+}
+@keyframes logo-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The track is the row's logos duplicated once (see buildLoop in
+       LogoMarquee.jsx), so -50% is exactly one full set — the loop point
+       is seamless. */
+    transform: translateX(-50%);
+  }
+}
+.logo-marquee__logo {
+  flex: 0 0 auto;
+  width: 150px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
+}
+.logo-marquee__logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.75);
+  transition: filter var(--duration-base) var(--ease-standard);
+}
+.logo-marquee__logo:hover img {
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee__track {
+    animation: none;
+  }
+}
+@media (max-width: 640px) {
+  .logo-marquee__logo {
+    width: 120px;
+    height: 52px;
+  }
+}
+
 @media (max-width: 640px) {
   .job-card {
     flex-direction: column;

@@ -24,6 +24,7 @@ class PageSectionKeys
             'intro',
             'why_choose_us_intro',
             'why_choose_us_item',
+            'hiring_partner_logo',
             'approach_intro',
             'approach_card',
             'who_we_work_with_intro',

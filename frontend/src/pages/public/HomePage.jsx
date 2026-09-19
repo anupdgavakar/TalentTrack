@@ -15,6 +15,7 @@ import ServiceCard from "../../components/cards/ServiceCard";
 import TestimonialCard from "../../components/cards/TestimonialCard";
 import StatsCard from "../../components/cards/StatsCard";
 import WhyChooseUs from "../../components/marketing/WhyChooseUs";
+import LogoMarquee from "../../components/marketing/LogoMarquee";
 import CourseCarousel from "../../components/marketing/CourseCarousel";
 import CTASection from "../../components/marketing/CTASection";
 import useFetch from "../../hooks/useFetch";
@@ -147,6 +148,8 @@ export default function HomePage() {
       )}
 
       <WhyChooseUs sections={aboutSections} />
+
+      <LogoMarquee sections={aboutSections} />
 
       <section className="section">
         <div className="container">

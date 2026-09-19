@@ -57,6 +57,13 @@ export const PAGE_SECTION_KEYS = {
       fields: ["icon", "title"],
     },
     {
+      key: "hiring_partner_logo",
+      label: "Hiring partner logo",
+      hint: "One company logo shown in the scrolling “Hiring Partners” strip on the homepage. Upload a logo image and the company name (used as its alt text) — the strip only appears once at least one logo is added.",
+      singleton: false,
+      fields: ["image", "title"],
+    },
+    {
       key: "approach_intro",
       label: "“Our Approach” section heading",
       hint: "The heading shown above the four approach cards.",
