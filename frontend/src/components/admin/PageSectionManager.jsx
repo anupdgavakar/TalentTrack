@@ -6,6 +6,7 @@ import Alert from "../ui/Alert";
 import Modal from "../ui/Modal";
 import FormInput from "../ui/FormInput";
 import Textarea from "../ui/Textarea";
+import RichTextEditor from "./RichTextEditor";
 import Select from "../ui/Select";
 import ConfirmDialog from "./ConfirmDialog";
 import useCachedFetch from "../../hooks/useCachedFetch";
@@ -179,7 +180,11 @@ export default function PageSectionManager({ page, heading, description }) {
 
   const previewIcon = form.icon ? createElement(getIcon(form.icon), { size: 20, "aria-hidden": true }) : null;
 
-  const previewText = (row) => row.title || row.subtitle || row.body || "(no text set)";
+  // row.body may now be rich HTML (RichTextEditor) rather than plain text —
+  // strip tags for this one-line list preview so the row shows readable
+  // text instead of literal markup.
+  const stripHtml = (html) => (html || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const previewText = (row) => row.title || row.subtitle || stripHtml(row.body) || "(no text set)";
 
   return (
     <>
@@ -305,7 +310,18 @@ export default function PageSectionManager({ page, heading, description }) {
                 error={fieldError("subtitle")}
               />
             )}
-            {activeGroup.fields.includes("body") && (
+            {activeGroup.fields.includes("body") && activeGroup.richBody && (
+              <RichTextEditor
+                key={editing?.id ?? `new-${activeGroup.key}`}
+                id="section-body"
+                label="Body text"
+                initialValue={form.body}
+                onChange={(html) => setForm((f) => ({ ...f, body: html }))}
+                error={fieldError("body")}
+                hint="Select text to bold it or turn it into a list — the same content the public page shows."
+              />
+            )}
+            {activeGroup.fields.includes("body") && !activeGroup.richBody && (
               <Textarea id="section-body" label="Body text" rows={4} value={form.body} onChange={update("body")} error={fieldError("body")} />
             )}
 

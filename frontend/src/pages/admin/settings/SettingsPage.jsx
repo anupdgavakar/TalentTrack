@@ -48,9 +48,34 @@ const FIELDS = [
       },
     ],
   },
+  {
+    section: "Floating Buttons",
+    hint: "The \"Get Job\" tab and the Call / WhatsApp bubbles shown on every public page. Each one can be turned off independently — see components/marketing/FloatingContactButtons.jsx.",
+    keys: [
+      { key: "whatsapp_number", label: "WhatsApp number", type: "text", hint: 'Include the country code, e.g. "+91 87884 20795". Leave blank to use the Phone number above instead.' },
+      { key: "show_get_job_button", label: "Show \"Get Job\" tab", type: "checkbox" },
+      { key: "show_whatsapp_button", label: "Show WhatsApp button", type: "checkbox" },
+      { key: "show_call_button", label: "Show Call button", type: "checkbox" },
+      {
+        key: "get_job_whatsapp_message",
+        label: "\"Get Job\" WhatsApp message",
+        type: "textarea",
+        hint: "Pre-filled into WhatsApp when a visitor taps the \"Get Job\" tab.",
+      },
+    ],
+  },
 ];
 
-const ALL_KEYS = FIELDS.flatMap((section) => section.keys.map((f) => f.key));
+const ALL_FIELDS = FIELDS.flatMap((section) => section.keys);
+const ALL_KEYS = ALL_FIELDS.map((f) => f.key);
+// Checkbox settings are stored server-side the same way every other
+// setting is — a plain string value ("1"/"0") in the same key/value table
+// — but edited in the form as a real boolean, so they need converting on
+// the way in (string -> boolean, defaulting to "on" the same way
+// FloatingContactButtons.jsx does) and back out (boolean -> "1"/"0")
+// rather than passing straight through like the text/email/textarea
+// fields already do.
+const CHECKBOX_KEYS = new Set(ALL_FIELDS.filter((f) => f.type === "checkbox").map((f) => f.key));
 
 export default function SettingsPage() {
   const { data, loading, error, refetch } = useFetch("/admin/settings");
@@ -63,12 +88,20 @@ export default function SettingsPage() {
 
   useEffect(() => {
     if (!data) return;
-    setForm(Object.fromEntries(ALL_KEYS.map((key) => [key, data[key] ?? ""])));
+    setForm(
+      Object.fromEntries(
+        ALL_KEYS.map((key) => [key, CHECKBOX_KEYS.has(key) ? data[key] !== "0" : data[key] ?? ""])
+      )
+    );
   }, [data]);
 
   const update = (key) => (e) => {
     setSuccess(false);
     setForm((f) => ({ ...f, [key]: e.target.value }));
+  };
+  const updateChecked = (key) => (e) => {
+    setSuccess(false);
+    setForm((f) => ({ ...f, [key]: e.target.checked }));
   };
   const fieldError = (name) => fieldErrors[`settings.${name}`]?.[0];
 
@@ -79,7 +112,10 @@ export default function SettingsPage() {
     setFieldErrors({});
     setSuccess(false);
     try {
-      await api.put("/admin/settings", { settings: form });
+      const settings = Object.fromEntries(
+        Object.entries(form).map(([key, value]) => [key, CHECKBOX_KEYS.has(key) ? (value ? "1" : "0") : value])
+      );
+      await api.put("/admin/settings", { settings });
       invalidate("/admin/settings");
       // The public footer reads these same keys via GET /settings/public —
       // nothing caches that on the frontend, but Setting::get() is
@@ -145,6 +181,11 @@ export default function SettingsPage() {
                     onChange={update(key)}
                     error={fieldError(key)}
                   />
+                ) : type === "checkbox" ? (
+                  <label className="admin-checkbox" key={key} style={{ alignSelf: "center" }}>
+                    <input type="checkbox" checked={Boolean(form[key])} onChange={updateChecked(key)} />
+                    {label}
+                  </label>
                 ) : (
                   <FormInput
                     key={key}

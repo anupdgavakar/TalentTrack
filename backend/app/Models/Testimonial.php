@@ -17,6 +17,9 @@ class Testimonial extends Model
         'quote',
         'avatar',
         'rating',
+        'review_date',
+        'google_url',
+        'is_verified',
         'is_featured',
         'is_active',
         'sort_order',
@@ -26,6 +29,8 @@ class Testimonial extends Model
     {
         return [
             'rating' => 'integer',
+            'review_date' => 'date',
+            'is_verified' => 'boolean',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
         ];

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import FloatingContactButtons from "../components/marketing/FloatingContactButtons";
 import Loader from "../components/ui/Loader";
 import useFetch from "../hooks/useFetch";
 import useJsonLd from "../hooks/useJsonLd";
@@ -53,6 +54,7 @@ export default function PublicLayout() {
         </Suspense>
       </main>
       <Footer />
+      <FloatingContactButtons settings={settings} />
     </div>
   );
 }

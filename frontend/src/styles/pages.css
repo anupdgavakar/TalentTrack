@@ -195,6 +195,31 @@
 .prose p + p {
   margin-top: var(--space-4);
 }
+/* Content saved through RichTextEditor (see components/admin/
+   RichTextEditor.jsx) is real HTML — bold/italic need no extra rule, but
+   <ul>/<ol> do, since base.css strips default list markers site-wide for
+   layout lists like this one's own split-section__list. Scoped to .prose
+   and .split-section__content (the two places admin body HTML renders —
+   see utils/renderBody.js) so this doesn't affect any other list. */
+.prose ul,
+.prose ol,
+.split-section__content ul,
+.split-section__content ol {
+  padding-left: 1.4em;
+  margin: var(--space-4) 0;
+}
+.prose ul,
+.split-section__content ul {
+  list-style: disc;
+}
+.prose ol,
+.split-section__content ol {
+  list-style: decimal;
+}
+.prose li,
+.split-section__content li {
+  margin-bottom: var(--space-2);
+}
 
 /* ---------- Intro section with an optional admin-uploaded photo (About
    page's "intro" content block) — text-only (.prose) when no image has

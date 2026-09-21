@@ -19,7 +19,10 @@ const EMPTY_FORM = {
   company: "",
   quote: "",
   rating: "",
+  review_date: "",
+  google_url: "",
   sort_order: "",
+  is_verified: false,
   is_featured: false,
   is_active: true,
 };
@@ -50,7 +53,10 @@ export default function TestimonialFormPage() {
       company: testimonial.company || "",
       quote: testimonial.quote || "",
       rating: testimonial.rating ? String(testimonial.rating) : "",
+      review_date: testimonial.review_date || "",
+      google_url: testimonial.google_url || "",
       sort_order: testimonial.sort_order ?? "",
+      is_verified: Boolean(testimonial.is_verified),
       is_featured: Boolean(testimonial.is_featured),
       is_active: Boolean(testimonial.is_active),
     });
@@ -76,7 +82,7 @@ export default function TestimonialFormPage() {
 
     const payload = new FormData();
     Object.entries(form).forEach(([key, value]) => {
-      if (key === "is_featured" || key === "is_active") {
+      if (key === "is_featured" || key === "is_active" || key === "is_verified") {
         payload.append(key, value ? "1" : "0");
       } else if (value !== "" && value !== null && value !== undefined) {
         payload.append(key, value);
@@ -165,6 +171,25 @@ export default function TestimonialFormPage() {
           />
 
           <FormInput
+            id="testimonial-review-date"
+            type="date"
+            label="Review date"
+            hint="When they actually left it — shown on the card."
+            value={form.review_date}
+            onChange={update("review_date")}
+            error={fieldError("review_date")}
+          />
+          <FormInput
+            id="testimonial-google-url"
+            type="url"
+            label="Link to the real review"
+            hint="Paste the URL of this review on Google/wherever it was posted, so it links back to the original."
+            value={form.google_url}
+            onChange={update("google_url")}
+            error={fieldError("google_url")}
+          />
+
+          <FormInput
             id="testimonial-sort-order"
             type="number"
             min="0"
@@ -199,12 +224,17 @@ export default function TestimonialFormPage() {
           label="Quote"
           required
           rows={4}
+          hint="Paste the review's actual wording — don't paraphrase or invent one; visitors can click through to the original if a review link is set above."
           value={form.quote}
           onChange={update("quote")}
           error={fieldError("quote")}
         />
 
         <div className="admin-checkbox-row">
+          <label className="admin-checkbox">
+            <input type="checkbox" checked={form.is_verified} onChange={updateChecked("is_verified")} />
+            Verified real review (shows a checkmark)
+          </label>
           <label className="admin-checkbox">
             <input type="checkbox" checked={form.is_featured} onChange={updateChecked("is_featured")} />
             Featured on the homepage

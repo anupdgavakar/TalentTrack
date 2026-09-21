@@ -372,3 +372,79 @@
     padding: var(--space-10) var(--space-5);
   }
 }
+
+/* ---------- FloatingContactButtons ---------- */
+/* Left-edge "Get Job" tab — vertical text, pinned to the left edge at
+   mid-height, sits above the header (z-index 100) and below the modal
+   overlay/skip-link (1000) so it never blocks a dialog. */
+.floating-tab {
+  position: fixed;
+  left: 0;
+  top: 55%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left top;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--gradient-green);
+  color: var(--white);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.02em;
+  padding: 0.65rem 1.1rem;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-md, var(--shadow-sm));
+  z-index: 500;
+  text-decoration: none;
+}
+.floating-tab:hover {
+  filter: brightness(1.05);
+}
+.floating-tab svg {
+  transform: rotate(90deg);
+}
+
+/* Bottom-right Call / WhatsApp bubbles, stacked. */
+.floating-bubbles {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  z-index: 500;
+}
+.floating-bubble {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  box-shadow: var(--shadow-md, var(--shadow-sm));
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+.floating-bubble:hover {
+  transform: scale(1.06);
+}
+.floating-bubble--whatsapp {
+  background: #25d366;
+}
+.floating-bubble--call {
+  background: var(--blue-600);
+}
+@media (max-width: 640px) {
+  .floating-tab {
+    padding: 0.5rem 0.85rem;
+    font-size: var(--fs-xs);
+  }
+  .floating-bubble {
+    width: 48px;
+    height: 48px;
+  }
+  .floating-bubbles {
+    right: var(--space-4);
+    bottom: var(--space-4);
+  }
+}

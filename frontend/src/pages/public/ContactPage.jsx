@@ -7,6 +7,7 @@ import useFetch from "../../hooks/useFetch";
 import useSeo from "../../hooks/useSeo";
 import { FALLBACK_SETTINGS } from "../../utils/siteSettings";
 import { findSection } from "../../utils/pageSectionKeys";
+import { renderBody } from "../../utils/renderBody";
 
 // Fallback copy for the two admin-editable blocks on this page — used only
 // if the matching /page-sections row doesn't exist yet (see AboutPage.jsx's
@@ -69,7 +70,7 @@ export default function ContactPage() {
         <div className="container split-section">
           <div className="split-section__content">
             <h2>{getInTouch.title}</h2>
-            <p>{getInTouch.body}</p>
+            <div dangerouslySetInnerHTML={renderBody(getInTouch.body)} />
 
             <div className="split-section__list">
               <div className="split-section__list-item">

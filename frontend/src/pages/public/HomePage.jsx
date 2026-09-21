@@ -189,6 +189,10 @@ export default function HomePage() {
                     quote: t.quote,
                     name: t.name,
                     role: [t.role_title, t.company].filter(Boolean).join(" · "),
+                    rating: t.rating,
+                    reviewDate: t.review_date,
+                    googleUrl: t.google_url,
+                    isVerified: t.is_verified,
                   }}
                 />
               ))}

@@ -9,19 +9,7 @@ import useFetch from "../../hooks/useFetch";
 import useSeo from "../../hooks/useSeo";
 import getIcon from "../../utils/iconMap";
 import { findSection, listSection } from "../../utils/pageSectionKeys";
-
-// Admin-editable "body" text blocks (like the intro paragraph below) are a
-// single Textarea field, so a blank line typed there is the only way an
-// admin can signal "this is a new paragraph" — split on that rather than
-// dumping the whole field into one <p>, which would run separate
-// paragraphs together with no visual break.
-function renderParagraphs(text) {
-  return (text || "")
-    .split(/\n{2,}/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean)
-    .map((paragraph, i) => <p key={i}>{paragraph}</p>);
-}
+import { renderBody } from "../../utils/renderBody";
 
 // The four core service pillars link to fixed site routes (/training,
 // /placement, ...) and stay hardcoded here rather than becoming admin-
@@ -152,7 +140,7 @@ export default function AboutPage() {
       <section className="section">
         <div className="container">
           <div className={intro.image ? "intro-section" : "prose"}>
-            <div className={intro.image ? "prose" : ""}>{renderParagraphs(intro.body)}</div>
+            <div className={intro.image ? "prose" : ""} dangerouslySetInnerHTML={renderBody(intro.body)} />
             {intro.image && <img src={intro.image} alt="" className="section-photo" loading="lazy" />}
           </div>
         </div>

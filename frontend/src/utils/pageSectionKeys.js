@@ -38,9 +38,10 @@ export const PAGE_SECTION_KEYS = {
     {
       key: "intro",
       label: "Introduction",
-      hint: "The founding-story paragraph, with an optional photo shown beside it.",
+      hint: "The founding-story paragraph, with an optional photo shown beside it. Use the toolbar for bold text and bulleted lists.",
       singleton: true,
       fields: ["body", "image"],
+      richBody: true,
     },
     {
       key: "why_choose_us_intro",
@@ -138,9 +139,10 @@ export const PAGE_SECTION_KEYS = {
     {
       key: "get_in_touch",
       label: "“Get in touch” block",
-      hint: "The heading and text shown beside the contact form, with an optional photo. The address/phone/email details themselves come from Settings, not here.",
+      hint: "The heading and text shown beside the contact form, with an optional photo. The address/phone/email details themselves come from Settings, not here. Use the toolbar for bold text and bulleted lists.",
       singleton: true,
       fields: ["title", "body", "image"],
+      richBody: true,
     },
   ],
 };

@@ -29,6 +29,13 @@ class Setting extends Model
         'social_instagram_url',
         'social_linkedin_url',
         'social_youtube_url',
+        // Floating "Get Job" / Call / WhatsApp buttons (see
+        // FloatingContactButtons.jsx) — admin-toggled from Settings.
+        'whatsapp_number',
+        'show_get_job_button',
+        'get_job_whatsapp_message',
+        'show_whatsapp_button',
+        'show_call_button',
     ];
 
     /**
