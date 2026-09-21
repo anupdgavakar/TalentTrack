@@ -109,34 +109,37 @@
 .course-card__header--variant-3 {
   background-image: linear-gradient(135deg, var(--green-500) 0%, var(--lime-400) 100%);
 }
-/* A photo is drawn as a second, independently-sized background layer:
-   `cover` for the brand gradient underneath (so it always fills the whole
-   header, no gaps) and `contain` for the photo itself, anchored to the
-   *padding box* rather than the full header — that's what turns
-   `padding: var(--space-4)` into a visible colored frame around the photo
-   instead of just trimming it. `contain` (not `cover`) matters because a
-   course photo is often a designed graphic with its own logo/text baked
-   in (a promo banner, not a generic stock photo) — `cover` was cropping
-   that text off; `contain` always shows the whole image. No tint over the
-   photo itself, so any text on it stays fully legible — the frame around
-   it is what keeps the card on-brand. */
+/* A photo is drawn as TWO background layers, and layer order matters here
+   because CSS stacks the *first*-listed background-image closest to the
+   viewer: the photo must be listed first (on top, sized `contain`, so it
+   shows in full with transparent gaps at the sides) with the brand
+   gradient listed second (behind it, sized `cover`, filling the whole
+   header) — that's what turns `padding: var(--space-4)` into a visible
+   colored frame in those gaps. Getting this order backwards (gradient
+   first) was an earlier bug here: an opaque `cover`-sized gradient on top
+   paints over 100% of the box and hides the photo completely, not just
+   "tints" it. `contain` (not `cover`) matters separately because a course
+   photo is often a designed graphic with its own logo/text baked in (a
+   promo banner, not a generic stock photo) — `cover` was cropping that
+   text off. No tint layer over the photo itself, so any text on it stays
+   fully legible — the frame around it is what keeps the card on-brand. */
 .course-card__header--photo {
-  background-size: cover, contain;
+  background-size: contain, cover;
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
-  background-origin: border-box, padding-box;
+  background-origin: padding-box, border-box;
 }
 .course-card__header--photo.course-card__header--variant-0 {
-  background-image: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%), var(--course-card-bg-image);
+  background-image: var(--course-card-bg-image), linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
 }
 .course-card__header--photo.course-card__header--variant-1 {
-  background-image: var(--gradient-green), var(--course-card-bg-image);
+  background-image: var(--course-card-bg-image), var(--gradient-green);
 }
 .course-card__header--photo.course-card__header--variant-2 {
-  background-image: linear-gradient(135deg, var(--navy-800) 0%, var(--blue-600) 100%), var(--course-card-bg-image);
+  background-image: var(--course-card-bg-image), linear-gradient(135deg, var(--navy-800) 0%, var(--blue-600) 100%);
 }
 .course-card__header--photo.course-card__header--variant-3 {
-  background-image: linear-gradient(135deg, var(--green-500) 0%, var(--lime-400) 100%), var(--course-card-bg-image);
+  background-image: var(--course-card-bg-image), linear-gradient(135deg, var(--green-500) 0%, var(--lime-400) 100%);
 }
 .course-card__header-badges {
   display: flex;
