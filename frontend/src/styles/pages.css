@@ -181,6 +181,16 @@
 }
 .prose p {
   color: var(--text-body);
+  /* renderParagraphs (AboutPage.jsx) only splits into separate <p> tags on
+     a *blank* line — that's the only way an admin typing in a plain
+     Textarea can signal "new paragraph". A single line break within one
+     of those paragraphs (e.g. one bullet per line in a pasted list) still
+     needs to render as a line break, but HTML collapses a lone "\n" in
+     text content by default, which is what was running an admin's
+     carefully-formatted bullet list into one unbroken sentence. pre-line
+     preserves both: single breaks render as line breaks, runs of
+     whitespace still collapse to one space same as normal text. */
+  white-space: pre-line;
 }
 .prose p + p {
   margin-top: var(--space-4);
