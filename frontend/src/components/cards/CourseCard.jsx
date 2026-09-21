@@ -24,35 +24,34 @@ function variantIndex(title) {
  * course: { id, title, category, level, shortDescription, duration, mode,
  * fee, imageUrl, slug }
  *
- * The colorful header block mirrors a common course-catalog card pattern
- * (photo or brand-color banner, with category/level shown as overlaid
- * pill badges) — see the redesign discussion for the reference. Below it,
- * the checklist deliberately only ever states things that are true for
- * every course rather than fabricated per-course numbers: duration and
- * fee come straight from the course record, and "100% Placement
- * Assistance" restates the same standing commitment already shown
- * elsewhere on the site (ServiceCard's Placement description, the Why
- * Choose Us "100% Job Assistance" item) — unlike a star rating or review
- * count, which this site has no real per-course data for and so isn't
- * shown here.
+ * The header block mirrors a common course-catalog card pattern (photo or
+ * brand-color banner, with category/level shown as overlaid pill badges).
+ * A course photo, when one is set, is a plain `<img>` filling the header
+ * edge-to-edge (`object-fit: cover` in cards.css) — shown as uploaded, no
+ * color tint or gradient drawn over or around it. Only a course with *no*
+ * photo falls back to the flat brand-gradient placeholder, so the header
+ * is never just an empty box. (An earlier version of this tried to layer
+ * the gradient and the photo together as two CSS background-image values
+ * on one element — real, but fragile: getting their stacking order or
+ * sizing even slightly wrong silently hid the photo or cropped it badly,
+ * and it happened twice. A real `<img>` element has none of that
+ * ambiguity, which is worth the tradeoff of losing the tinted-frame look.)
+ * Below the header, the checklist deliberately only ever states things
+ * that are true for every course rather than fabricated per-course
+ * numbers: duration and fee come straight from the course record, and
+ * "100% Placement Assistance" restates the same standing commitment
+ * already shown elsewhere on the site (ServiceCard's Placement
+ * description, the Why Choose Us "100% Job Assistance" item) — unlike a
+ * star rating or review count, which this site has no real per-course
+ * data for and so isn't shown here.
  */
 export default function CourseCard({ course }) {
   const { title, category, level, shortDescription, duration, mode, fee, imageUrl, slug } = course;
-  // A CSS custom property, not `backgroundImage` directly — the photo
-  // variants in cards.css layer a brand-color tint gradient *and* this
-  // image into `background-image`, and setting `backgroundImage` inline
-  // would replace that whole layered value instead of filling in one part
-  // of it (see the `--course-card-bg-image` rules there).
-  const headerStyle = imageUrl ? { "--course-card-bg-image": `url(${imageUrl})` } : undefined;
 
   return (
     <article className="course-card">
-      <div
-        className={`course-card__header course-card__header--variant-${variantIndex(title || "")}${
-          imageUrl ? " course-card__header--photo" : ""
-        }`}
-        style={headerStyle}
-      >
+      <div className={`course-card__header${imageUrl ? "" : ` course-card__header--variant-${variantIndex(title || "")}`}`}>
+        {imageUrl && <img src={imageUrl} alt="" className="course-card__header-image" loading="lazy" />}
         {(category || level) && (
           <div className="course-card__header-badges">
             {category && <span className="course-card__badge">{category}</span>}

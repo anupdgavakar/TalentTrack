@@ -80,10 +80,10 @@
   transform: translateY(-3px);
 }
 
-/* Colorful header band — either the course's own uploaded photo, framed on
-   the matching brand gradient, or, with no photo set, that same gradient
-   shown plain so the card is never just an empty gray box. The four
-   variants reuse the exact gradient pairs already established by
+/* Header band — a course's own uploaded photo, shown as-is and filling the
+   whole header (see .course-card__header-image below), or, with no photo
+   set, a flat brand gradient so the card is never just an empty gray box.
+   The four gradient variants reuse the exact pairs already established by
    why-choose-us-item's icon badges, picked per-course by CourseCard's
    title hash — see that component for why this isn't nth-child-based. */
 .course-card__header {
@@ -93,9 +93,7 @@
   display: flex;
   align-items: flex-end;
   padding: var(--space-4);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  overflow: hidden;
 }
 .course-card__header--variant-0 {
   background-image: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
@@ -109,39 +107,27 @@
 .course-card__header--variant-3 {
   background-image: linear-gradient(135deg, var(--green-500) 0%, var(--lime-400) 100%);
 }
-/* A photo is drawn as TWO background layers, and layer order matters here
-   because CSS stacks the *first*-listed background-image closest to the
-   viewer: the photo must be listed first (on top, sized `contain`, so it
-   shows in full with transparent gaps at the sides) with the brand
-   gradient listed second (behind it, sized `cover`, filling the whole
-   header) — that's what turns `padding: var(--space-4)` into a visible
-   colored frame in those gaps. Getting this order backwards (gradient
-   first) was an earlier bug here: an opaque `cover`-sized gradient on top
-   paints over 100% of the box and hides the photo completely, not just
-   "tints" it. `contain` (not `cover`) matters separately because a course
-   photo is often a designed graphic with its own logo/text baked in (a
-   promo banner, not a generic stock photo) — `cover` was cropping that
-   text off. No tint layer over the photo itself, so any text on it stays
-   fully legible — the frame around it is what keeps the card on-brand. */
-.course-card__header--photo {
-  background-size: contain, cover;
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
-  background-origin: padding-box, border-box;
-}
-.course-card__header--photo.course-card__header--variant-0 {
-  background-image: var(--course-card-bg-image), linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
-}
-.course-card__header--photo.course-card__header--variant-1 {
-  background-image: var(--course-card-bg-image), var(--gradient-green);
-}
-.course-card__header--photo.course-card__header--variant-2 {
-  background-image: var(--course-card-bg-image), linear-gradient(135deg, var(--navy-800) 0%, var(--blue-600) 100%);
-}
-.course-card__header--photo.course-card__header--variant-3 {
-  background-image: var(--course-card-bg-image), linear-gradient(135deg, var(--green-500) 0%, var(--lime-400) 100%);
+/* A real <img> element, not a CSS background — simpler and impossible to
+   get backwards the way a layered background-image list was (see
+   CourseCard.jsx's docblock: that approach silently hid or badly cropped
+   the photo twice). It's absolutely positioned to fill the header exactly
+   (ignoring the header's own padding, which only affects the badges
+   below), `object-fit: cover` so it always fills that box with no gaps to
+   fill with color, and no tint/gradient is drawn over it — the photo
+   shows exactly as uploaded, full stop. */
+.course-card__header-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .course-card__header-badges {
+  /* Positioned (not static) so it reliably paints above the absolutely-
+     positioned photo regardless of DOM order — see the CSS2 stacking
+     order for why a plain static element can't be relied on for that. */
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
