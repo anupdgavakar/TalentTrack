@@ -12,11 +12,11 @@ import {
 import Hero from "../../components/marketing/Hero";
 import SectionTitle from "../../components/ui/SectionTitle";
 import ServiceCard from "../../components/cards/ServiceCard";
-import TestimonialCard from "../../components/cards/TestimonialCard";
 import StatsCard from "../../components/cards/StatsCard";
 import WhyChooseUs from "../../components/marketing/WhyChooseUs";
 import LogoMarquee from "../../components/marketing/LogoMarquee";
 import CourseCarousel from "../../components/marketing/CourseCarousel";
+import TestimonialCarousel from "../../components/marketing/TestimonialCarousel";
 import CTASection from "../../components/marketing/CTASection";
 import useFetch from "../../hooks/useFetch";
 import useSeo from "../../hooks/useSeo";
@@ -181,22 +181,18 @@ export default function HomePage() {
         <section className="section section--subtle">
           <div className="container">
             <SectionTitle eyebrow="Success Stories" title="What our candidates say" align="center" />
-            <div className="card-grid">
-              {testimonials.map((t) => (
-                <TestimonialCard
-                  key={t.id}
-                  testimonial={{
-                    quote: t.quote,
-                    name: t.name,
-                    role: [t.role_title, t.company].filter(Boolean).join(" · "),
-                    rating: t.rating,
-                    reviewDate: t.review_date,
-                    googleUrl: t.google_url,
-                    isVerified: t.is_verified,
-                  }}
-                />
-              ))}
-            </div>
+            <TestimonialCarousel
+              testimonials={testimonials.map((t) => ({
+                id: t.id,
+                quote: t.quote,
+                name: t.name,
+                role: [t.role_title, t.company].filter(Boolean).join(" · "),
+                rating: t.rating,
+                reviewDate: t.review_date,
+                googleUrl: t.google_url,
+                isVerified: t.is_verified,
+              }))}
+            />
           </div>
         </section>
       )}
