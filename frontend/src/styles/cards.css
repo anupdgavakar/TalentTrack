@@ -162,7 +162,13 @@
   margin: var(--space-4) 0;
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
-  flex-grow: 1;
+  /* No flex-grow here — that made the checklist itself stretch to fill
+     the card's leftover height, and since its own li's don't stretch
+     with it, that leftover space collected as a visible gap right below
+     the last item instead of above the buttons where it belongs.
+     `.course-card__actions`'s `margin-top: auto` below is what pushes the
+     button row to the bottom of the card (for equal-height cards in a
+     row/carousel) — one source of that push, not two. */
 }
 .course-card__checklist li {
   display: flex;
