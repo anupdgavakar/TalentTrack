@@ -41,8 +41,7 @@ export default function TrainingPage() {
           <Breadcrumb items={[{ label: "Home", to: "/" }, { label: "Training" }]} />
           <h1>Training Programs</h1>
           <p>
-            Industry-oriented technical and professional courses — certification programs to
-            corporate training — built around what employers are actually hiring for.
+            We provide 100% Placement Assurance*, industry-oriented IT courses, fresher-friendly training, experienced candidate upskilling, and dedicated support for non-IT to IT career switches, career-gap candidates, and job seekers restarting their careers. Our programs focus on practical, project-based learning, real-world industry projects, live project experience, and experienced industry trainers to develop job-ready skills. We also provide professional resume and LinkedIn profile building, technical and HR interview preparation, communication and soft-skills training, mock interviews, assessments, career guidance, and mentorship. With dedicated placement assistance, multiple interview opportunities, career growth support, and access to opportunities across IT roles, we help candidates build skills, confidence, and successful IT careers.
           </p>
         </div>
       </header>
