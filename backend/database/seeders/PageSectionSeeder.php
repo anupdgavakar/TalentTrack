@@ -31,6 +31,16 @@ class PageSectionSeeder extends Seeder
     {
         $this->seedAbout();
         $this->seedContact();
+        $this->seedTraining();
+        $this->seedPlacement();
+        $this->seedRecruitment();
+        $this->seedConsulting();
+        // Deliberately NOT seeding 'site'/'logo' — unlike every block
+        // above, there's no existing hardcoded copy to preserve; the
+        // frontend already falls back to the static bundled logo.png
+        // until an admin uploads a real one, so an empty row here would
+        // add nothing (PageSectionManager's "singleton, not set yet" state
+        // already covers it).
     }
 
     private function seedAbout(): void
@@ -197,6 +207,85 @@ class PageSectionSeeder extends Seeder
             'body' => 'Prefer to reach out directly? Our team is available on the details below during business '
                 .'hours, Monday to Saturday.',
         ]);
+    }
+
+    private function seedTraining(): void
+    {
+        $this->row('training', 'hero', 0, [
+            'title' => 'Training Programs',
+            'subtitle' => 'Industry-oriented technical and professional courses — certification programs to '
+                .'corporate training — built around what employers are actually hiring for.',
+        ]);
+    }
+
+    private function seedPlacement(): void
+    {
+        $this->row('placement', 'hero', 0, [
+            'title' => 'Placement Opportunities',
+            'subtitle' => 'Category-wise job opportunities across IT, banking, sales, engineering and more — '
+                .'with end-to-end placement assistance from resume to offer.',
+        ]);
+
+        $this->row('placement', 'category_section', 0, [
+            'title' => 'Find opportunities in your field',
+        ]);
+
+        $this->row('placement', 'featured_section', 0, [
+            'title' => 'Featured openings',
+        ]);
+    }
+
+    private function seedRecruitment(): void
+    {
+        $this->row('recruitment', 'hero', 0, [
+            'title' => 'Recruitment Services for Employers',
+            'subtitle' => "Tell us who you're looking to hire and our recruitment team will get back to you with "
+                .'a shortlist of candidates matched to your role, budget and timeline.',
+        ]);
+
+        $this->row('recruitment', 'intro', 0, [
+            'title' => 'Why hire through Talent Track',
+            'body' => 'We run our own training pipelines, so many of the candidates we place have already been '
+                .'assessed on real, job-ready skills — not just a resume. That means faster shortlists and fewer '
+                .'mismatched hires.',
+        ]);
+
+        $recruitmentBenefits = [
+            'Dedicated account manager who learns your hiring needs',
+            'Pre-screened, role-matched candidate shortlists — typically within 5 working days',
+            'Access to our verified talent pool across IT, banking, sales, engineering and more',
+            'Replacement guarantee window on every confirmed hire',
+            'Flexible engagement: one-off roles, bulk hiring, or ongoing retained search',
+        ];
+        foreach ($recruitmentBenefits as $i => $body) {
+            $this->row('recruitment', 'benefit_item', $i, ['body' => $body]);
+        }
+    }
+
+    private function seedConsulting(): void
+    {
+        $this->row('consulting', 'hero', 0, [
+            'title' => 'Career Consulting',
+            'subtitle' => 'Not sure which course or career path is right for you? Book a session with one of our '
+                .'counsellors and get a plan tailored to your background and goals.',
+        ]);
+
+        $this->row('consulting', 'intro', 0, [
+            'title' => 'What our consulting sessions cover',
+            'body' => 'Every session starts with understanding where you are today — your background, interests '
+                .'and constraints — before we recommend a course, certification or job-search strategy.',
+        ]);
+
+        $consultingServices = [
+            'One-on-one career counselling and skill-gap assessment',
+            'Resume and LinkedIn profile review with actionable feedback',
+            'Interview preparation, including mock interviews for your target role',
+            'Course and career-path recommendations based on your goals',
+            'Guidance for career switchers moving into a new field',
+        ];
+        foreach ($consultingServices as $i => $body) {
+            $this->row('consulting', 'service_item', $i, ['body' => $body]);
+        }
     }
 
     private function row(string $page, string $sectionKey, int $sortOrder, array $fields): void

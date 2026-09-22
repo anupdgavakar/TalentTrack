@@ -145,6 +145,93 @@ export const PAGE_SECTION_KEYS = {
       richBody: true,
     },
   ],
+  training: [
+    {
+      key: "hero",
+      label: "Hero heading",
+      hint: "The page's top heading and subheading, above the course search/filter bar.",
+      singleton: true,
+      fields: ["title", "subtitle"],
+    },
+  ],
+  placement: [
+    {
+      key: "hero",
+      label: "Hero heading",
+      hint: "The page's top heading and subheading.",
+      singleton: true,
+      fields: ["title", "subtitle"],
+    },
+    {
+      key: "category_section",
+      label: "“Browse by category” heading",
+      hint: "The heading shown above the job-category cards. The categories themselves come from Job Categories, not here.",
+      singleton: true,
+      fields: ["title"],
+    },
+    {
+      key: "featured_section",
+      label: "“Featured openings” heading",
+      hint: "The heading shown above the featured job listings. The listings themselves come from Job Postings, not here.",
+      singleton: true,
+      fields: ["title"],
+    },
+  ],
+  recruitment: [
+    {
+      key: "hero",
+      label: "Hero heading",
+      hint: "The page's top heading and subheading.",
+      singleton: true,
+      fields: ["title", "subtitle"],
+    },
+    {
+      key: "intro",
+      label: "“Why hire through us” block",
+      hint: "The heading and paragraph shown beside the enquiry form.",
+      singleton: true,
+      fields: ["title", "body"],
+    },
+    {
+      key: "benefit_item",
+      label: "Benefit checklist item",
+      hint: "One line in the checklist under “Why hire through us”.",
+      singleton: false,
+      fields: ["body"],
+    },
+  ],
+  consulting: [
+    {
+      key: "hero",
+      label: "Hero heading",
+      hint: "The page's top heading and subheading.",
+      singleton: true,
+      fields: ["title", "subtitle"],
+    },
+    {
+      key: "intro",
+      label: "“What sessions cover” block",
+      hint: "The heading and paragraph shown beside the booking form.",
+      singleton: true,
+      fields: ["title", "body"],
+    },
+    {
+      key: "service_item",
+      label: "Session checklist item",
+      hint: "One line in the checklist under “What sessions cover”.",
+      singleton: false,
+      fields: ["body"],
+    },
+  ],
+  site: [
+    {
+      key: "logo",
+      label: "Site logo",
+      hint: "Shown in the header and footer across the whole site. Leave unset to keep the default logo.",
+      singleton: true,
+      fields: ["image"],
+    },
+  ],
 };
 
 /**

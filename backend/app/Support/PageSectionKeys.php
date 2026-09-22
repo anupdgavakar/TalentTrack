@@ -16,7 +16,7 @@ namespace App\Support;
  */
 class PageSectionKeys
 {
-    public const PAGES = ['about', 'contact'];
+    public const PAGES = ['about', 'contact', 'training', 'placement', 'recruitment', 'consulting', 'site'];
 
     public const KEYS = [
         'about' => [
@@ -38,6 +38,32 @@ class PageSectionKeys
         'contact' => [
             'hero',
             'get_in_touch',
+        ],
+        'training' => [
+            'hero',
+        ],
+        'placement' => [
+            'hero',
+            'category_section',
+            'featured_section',
+        ],
+        'recruitment' => [
+            'hero',
+            'intro',
+            'benefit_item',
+        ],
+        'consulting' => [
+            'hero',
+            'intro',
+            'service_item',
+        ],
+        // Not really a "page" — a single global row (the site logo) that
+        // doesn't belong to any one public page, but reuses the
+        // page_sections machinery (image upload + optimization, the admin
+        // form, PageSectionManager) rather than building a second image-
+        // upload path just for this. See SiteBrandingPage.jsx.
+        'site' => [
+            'logo',
         ],
     ];
 

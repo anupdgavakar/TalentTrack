@@ -99,6 +99,11 @@ export const TestimonialFormPage = lazyWithReload(() => import("../pages/admin/t
 export const StatisticsListPage = lazyWithReload(() => import("../pages/admin/statistics/StatisticsListPage"));
 export const AboutContentPage = lazyWithReload(() => import("../pages/admin/content/AboutContentPage"));
 export const ContactContentPage = lazyWithReload(() => import("../pages/admin/content/ContactContentPage"));
+export const TrainingContentPage = lazyWithReload(() => import("../pages/admin/content/TrainingContentPage"));
+export const PlacementContentPage = lazyWithReload(() => import("../pages/admin/content/PlacementContentPage"));
+export const RecruitmentContentPage = lazyWithReload(() => import("../pages/admin/content/RecruitmentContentPage"));
+export const ConsultingContentPage = lazyWithReload(() => import("../pages/admin/content/ConsultingContentPage"));
+export const SiteBrandingPage = lazyWithReload(() => import("../pages/admin/content/SiteBrandingPage"));
 export const SettingsPage = lazyWithReload(() => import("../pages/admin/settings/SettingsPage"));
 export const LeadsListPage = lazyWithReload(() => import("../pages/admin/leads/LeadsListPage"));
 export const ReportsPage = lazyWithReload(() => import("../pages/admin/reports/ReportsPage"));

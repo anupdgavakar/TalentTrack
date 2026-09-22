@@ -8,6 +8,20 @@ import EmptyState from "../../components/ui/EmptyState";
 import Alert from "../../components/ui/Alert";
 import useFetch from "../../hooks/useFetch";
 import useSeo from "../../hooks/useSeo";
+import { findSection } from "../../utils/pageSectionKeys";
+
+// See AboutPage.jsx's matching comment — only used if these rows don't
+// exist yet in the database.
+const FALLBACK = {
+  hero: {
+    title: "Placement Opportunities",
+    subtitle:
+      "Category-wise job opportunities across IT, banking, sales, engineering and more — with end-to-end "
+      + "placement assistance from resume to offer.",
+  },
+  category_section: { title: "Find opportunities in your field" },
+  featured_section: { title: "Featured openings" },
+};
 
 export default function PlacementPage() {
   useSeo({
@@ -15,6 +29,11 @@ export default function PlacementPage() {
     description:
       "Category-wise job opportunities across IT, banking, sales, engineering and more, with end-to-end placement assistance from resume to offer.",
   });
+
+  const { data: sections } = useFetch("/page-sections?page=placement");
+  const hero = findSection(sections, "hero") || FALLBACK.hero;
+  const categorySection = findSection(sections, "category_section") || FALLBACK.category_section;
+  const featuredSection = findSection(sections, "featured_section") || FALLBACK.featured_section;
 
   const { data: categories, loading: categoriesLoading } = useFetch("/categories?type=job");
   const { data: featuredData, loading: jobsLoading, error: jobsError } = useFetch(
@@ -27,17 +46,14 @@ export default function PlacementPage() {
       <header className="page-header">
         <div className="container">
           <Breadcrumb items={[{ label: "Home", to: "/" }, { label: "Placement" }]} />
-          <h1>Placement Opportunities</h1>
-          <p>
-            Category-wise job opportunities across IT, banking, sales, engineering and more —
-            with end-to-end placement assistance from resume to offer.
-          </p>
+          <h1>{hero.title}</h1>
+          {hero.subtitle && <p>{hero.subtitle}</p>}
         </div>
       </header>
 
       <section className="section">
         <div className="container">
-          <SectionTitle eyebrow="Browse by Category" title="Find opportunities in your field" />
+          <SectionTitle eyebrow="Browse by Category" title={categorySection.title} />
 
           {categoriesLoading && <Loader center label="Loading categories…" />}
 
@@ -57,7 +73,7 @@ export default function PlacementPage() {
 
       <section className="section section--subtle">
         <div className="container">
-          <SectionTitle eyebrow="Featured" title="Featured openings" />
+          <SectionTitle eyebrow="Featured" title={featuredSection.title} />
 
           {jobsLoading && <Loader center label="Loading openings…" />}
           {jobsError && <Alert variant="error">{jobsError}</Alert>}

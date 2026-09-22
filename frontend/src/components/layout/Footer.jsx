@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon } from "../ui/SocialIcons";
-import logo from "../../assets/logo.png";
+import defaultLogo from "../../assets/logo.png";
 import useFetch from "../../hooks/useFetch";
 import { FALLBACK_SETTINGS } from "../../utils/siteSettings";
+import { findSection } from "../../utils/pageSectionKeys";
 
 const SERVICE_LINKS = [
   { label: "Training", to: "/training" },
@@ -21,6 +22,10 @@ export default function Footer() {
   const year = new Date().getFullYear();
   const { data } = useFetch("/settings/public");
   const settings = { ...FALLBACK_SETTINGS, ...data };
+
+  // See Header.jsx's matching comment.
+  const { data: siteSections } = useFetch("/page-sections?page=site");
+  const logo = findSection(siteSections, "logo")?.image || defaultLogo;
 
   const socialLinks = [
     { label: "Facebook", href: settings.social_facebook_url, icon: FacebookIcon },

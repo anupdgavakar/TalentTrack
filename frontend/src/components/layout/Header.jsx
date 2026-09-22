@@ -3,7 +3,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
 import Button from "../ui/Button";
 import { useAuth } from "../../context/AuthContext";
-import logo from "../../assets/logo.png";
+import useFetch from "../../hooks/useFetch";
+import { findSection } from "../../utils/pageSectionKeys";
+import defaultLogo from "../../assets/logo.png";
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
@@ -19,6 +21,11 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isAuthenticated, isAdmin, user, logout } = useAuth();
   const navigate = useNavigate();
+
+  // Admin-uploaded logo (Site Branding) — falls back to the bundled
+  // default until one's set. See SiteBrandingPage.jsx.
+  const { data: siteSections } = useFetch("/page-sections?page=site");
+  const logo = findSection(siteSections, "logo")?.image || defaultLogo;
 
   const accountLink = isAdmin ? "/admin/dashboard" : "/dashboard";
 
