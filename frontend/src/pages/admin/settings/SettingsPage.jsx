@@ -36,6 +36,24 @@ const FIELDS = [
     ],
   },
   {
+    section: "Office Location",
+    hint: "Shown as an embedded Google map and \"Get Directions\" button on the Contact page — see pages/public/ContactPage.jsx.",
+    keys: [
+      {
+        key: "office_map_address",
+        label: "Office address (for the map)",
+        type: "textarea",
+        hint: "Used to place the pin on the embedded map, and shown as text next to it. Can be the same as the footer address above, or more detailed.",
+      },
+      {
+        key: "office_map_link",
+        label: "Google Maps link",
+        type: "url",
+        hint: 'The "share" link from Google Maps for your office (open the pin in Google Maps, tap Share, copy the link). Used for the "Get Directions" button.',
+      },
+    ],
+  },
+  {
     section: "Notifications",
     hint: "Who gets emailed when a new lead, course enrollment, or job application comes in from the public site.",
     keys: [

@@ -1,7 +1,8 @@
 import { useSearchParams } from "react-router-dom";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Navigation } from "lucide-react";
 import Breadcrumb from "../../components/ui/Breadcrumb";
 import Loader from "../../components/ui/Loader";
+import Button from "../../components/ui/Button";
 import LeadForm from "../../components/forms/LeadForm";
 import useFetch from "../../hooks/useFetch";
 import useSeo from "../../hooks/useSeo";
@@ -95,6 +96,38 @@ export default function ContactPage() {
           <LeadForm type="general" submitLabel="Send Message" initialMessage={initialMessage} />
         </div>
       </section>
+
+      {settings.office_map_address && (
+        <section className="section section--subtle">
+          <div className="container">
+            <div className="contact-map">
+              <div className="contact-map__info">
+                <h2>Find Us</h2>
+                <p className="contact-map__address">{settings.office_map_address}</p>
+                {settings.office_map_link && (
+                  <Button
+                    href={settings.office_map_link}
+                    target="_blank"
+                    rel="noreferrer"
+                    variant="outline"
+                    icon={Navigation}
+                    iconPosition="left"
+                  >
+                    Get Directions
+                  </Button>
+                )}
+              </div>
+              <iframe
+                className="contact-map__frame"
+                title="Talent Track Technologies — office location"
+                src={`https://www.google.com/maps?q=${encodeURIComponent(settings.office_map_address)}&output=embed`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

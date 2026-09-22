@@ -17,4 +17,12 @@ export const FALLBACK_SETTINGS = {
   social_instagram_url: "#",
   social_linkedin_url: "#",
   social_youtube_url: "#",
+  // "Find Us" map block on the Contact page (ContactPage.jsx). These two
+  // are edited from Settings -> Office Location, same as the rest of this
+  // file — the values below are the real office location, used only until
+  // an admin visits that screen (they haven't needed to yet, since this is
+  // a brand-new field with no saved value in the settings table).
+  office_map_address:
+    "Second Floor, Yugay Plaza, Above Hotel Manas Satara, Between Gandharv Veg and Joshi Wadewale, On main road going towards Congress Bhavan Road, At T Junction Signal, Balgandharv Chowk, Off J.M. Road, Shivaji Nagar, Pune 411005",
+  office_map_link: "https://maps.app.goo.gl/BRReepLHcYoyKd3T9",
 };

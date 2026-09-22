@@ -147,6 +147,39 @@
   margin-top: 2px;
 }
 
+/* ---------- Office location / embedded map (Contact page's "Find Us"
+   block) — built from Settings -> Office Location, no Maps API key needed
+   since the iframe uses Google's plain "output=embed" query. ---------- */
+.contact-map {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+.contact-map__info h2 {
+  margin-bottom: var(--space-4);
+}
+.contact-map__address {
+  color: var(--text-muted);
+  white-space: pre-line;
+  margin-bottom: var(--space-6);
+}
+.contact-map__frame {
+  width: 100%;
+  height: 340px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+@media (max-width: 900px) {
+  .contact-map {
+    grid-template-columns: 1fr;
+  }
+  .contact-map__frame {
+    height: 280px;
+  }
+}
+
 /* ---------- Candidate auth pages (Login / Register — Phase 8) ---------- */
 .auth-layout {
   display: flex;

@@ -36,6 +36,14 @@ class Setting extends Model
         'get_job_whatsapp_message',
         'show_whatsapp_button',
         'show_call_button',
+        // Google Maps location block on the Contact page (see
+        // ContactPage.jsx) — office_map_address builds the embedded map
+        // (no API key needed: Google's "output=embed" query accepts a
+        // plain address string), office_map_link is the "Get Directions"
+        // button and should be a real Google Maps share link so it points
+        // at the exact pinned location rather than a re-geocoded guess.
+        'office_map_address',
+        'office_map_link',
     ];
 
     /**
