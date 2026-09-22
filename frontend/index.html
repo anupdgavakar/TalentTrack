@@ -10,6 +10,34 @@
     <meta name="theme-color" content="#0a1c37" />
     <title>Talent Track Technologies</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Static fallback Open Graph / Twitter Card tags. useSeo.js (see its
+         own docblock) overwrites these per-page once React mounts, but a
+         crawler or share-preview bot that doesn't execute JS (WhatsApp,
+         Slack, older Facebook/Twitter unfurlers, and some simple SEO
+         crawlers) only ever sees what's here in the raw HTML — so this is
+         the "nothing renders JS" fallback, one static image/description
+         for the whole site rather than no preview at all. -->
+    <meta property="og:site_name" content="Talent Track Technologies" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Talent Track Technologies — Training, Placement, Recruitment &amp; Consulting"
+    />
+    <meta
+      property="og:description"
+      content="Talent Track Technologies — Training, Placement, Recruitment and Career Consulting."
+    />
+    <meta property="og:image" content="%VITE_SITE_URL%/favicon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Talent Track Technologies — Training, Placement, Recruitment &amp; Consulting"
+    />
+    <meta
+      name="twitter:description"
+      content="Talent Track Technologies — Training, Placement, Recruitment and Career Consulting."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
