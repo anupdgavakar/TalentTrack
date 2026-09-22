@@ -90,6 +90,7 @@
   color: var(--white);
   padding: 0 var(--space-2);
   margin-bottom: var(--space-8);
+  flex-shrink: 0;
 }
 .admin-sidebar__brand img {
   width: 32px;
@@ -101,6 +102,31 @@
   flex-direction: column;
   gap: var(--space-1);
   flex-grow: 1;
+  /* The nav list has grown past a single viewport's height (About/Contact/
+     Training/Placement/Recruitment/Consulting Content + Site Branding on
+     top of everything else) — without its own scroll area, that overflow
+     used to push the "View site"/"Log out" footer below the fold with no
+     way to reach it except the browser scrolling the whole sticky sidebar
+     out of view. Scrolling only this middle section keeps the brand header
+     and the footer links always visible, same as most admin dashboards. */
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+.admin-sidebar__nav::-webkit-scrollbar {
+  width: 6px;
+}
+.admin-sidebar__nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-sidebar__nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-full);
+}
+.admin-sidebar__nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 .admin-sidebar__link {
   display: flex;
@@ -132,6 +158,7 @@
   gap: var(--space-1);
   padding-top: var(--space-4);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
 }
 .admin-sidebar__logout {
   color: #ff9b9b;
