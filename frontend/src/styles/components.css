@@ -151,11 +151,11 @@
 .section--dark .section-title__subtitle {
   color: var(--text-on-dark-muted);
 }
-.section--green .section-title__eyebrow {
-  color: var(--green-600);
+.section--indigo .section-title__eyebrow {
+  color: var(--indigo-600);
   background: var(--white);
 }
-.section--green .section-title__subtitle {
+.section--indigo .section-title__subtitle {
   color: rgba(255, 255, 255, 0.85);
 }
 

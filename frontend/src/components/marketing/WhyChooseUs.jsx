@@ -3,8 +3,8 @@ import getIcon from "../../utils/iconMap";
 import { findSection, listSection } from "../../utils/pageSectionKeys";
 
 /**
- * The "Why Choose Us?" green-gradient band — a grid of square cards (icon
- * on top, label below), one per item. Rendered on both HomePage and
+ * The "Why Choose Us?" blue/indigo-gradient band — a grid of square cards
+ * (icon on top, label below), one per item. Rendered on both HomePage and
  * AboutPage, but the content is admin-managed from a single spot — the
  * About Page Content screen — via the `why_choose_us_intro` (singleton
  * title) and `why_choose_us_item` (repeatable icon+title) section keys.
@@ -23,12 +23,12 @@ import { findSection, listSection } from "../../utils/pageSectionKeys";
  * fetching again here. Renders nothing until at least one item exists.
  *
  * `why_choose_us_intro`'s optional `image` becomes this section's
- * background photo instead of the plain green gradient — see the
+ * background photo instead of the plain gradient — see the
  * `why-choose-us--has-bg` rule in base.css for the tinted-overlay +
  * `background-attachment: fixed` "parallax" treatment (the image stays put
  * while the page scrolls past it) and why that's turned off on touch
  * devices. No image set (the default) falls back to the plain
- * `section--green` background exactly as before.
+ * `section--indigo` background exactly as before.
  */
 export default function WhyChooseUs({ sections }) {
   const intro = findSection(sections, "why_choose_us_intro");
@@ -42,7 +42,7 @@ export default function WhyChooseUs({ sections }) {
 
   return (
     <section
-      className={`section section--green${intro?.image ? " why-choose-us--has-bg" : ""}`}
+      className={`section section--indigo${intro?.image ? " why-choose-us--has-bg" : ""}`}
       style={bgStyle}
     >
       <div className="container">

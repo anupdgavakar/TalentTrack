@@ -144,22 +144,25 @@ textarea:focus-visible,
   color: var(--white);
 }
 
-.section--green {
-  background: var(--gradient-green);
+/* Named --indigo rather than --green: originally a plain green band, moved
+   to blue/indigo so "Why Choose Us?" doesn't reuse the exact same green
+   as the rest of the page's icons/badges. */
+.section--indigo {
+  background: var(--gradient-choose-us);
 }
 
 /* Optional background photo for the "Why Choose Us?" band (WhyChooseUs.jsx),
    set only when an admin has uploaded one via the About Page Content
    screen — otherwise the section stays the plain gradient above. The
-   green gradient is layered over the photo as a semi-transparent tint
-   (rather than a plain dark scrim) so the section keeps its brand color
-   and the white heading/card icons stay readable over any photo.
+   gradient is layered over the photo as a semi-transparent tint (rather
+   than a plain dark scrim) so the section keeps its brand color and the
+   white heading/card icons stay readable over any photo.
    `background-attachment: fixed` gives the "stuck while you scroll"
    parallax feel that was asked for. */
 .why-choose-us--has-bg {
-  /* Same two brand colors as --gradient-green (#1f9d4f -> #8fe23f), just
+  /* Same two colors as --gradient-choose-us (blue-700 -> indigo-600), just
      with alpha added so the photo shows through the tint. */
-  background-image: linear-gradient(135deg, rgba(31, 157, 79, 0.88) 0%, rgba(143, 226, 63, 0.82) 100%),
+  background-image: linear-gradient(135deg, rgba(25, 72, 179, 0.88) 0%, rgba(79, 70, 229, 0.82) 100%),
     var(--why-choose-us-bg-image);
   background-size: cover;
   background-position: center;
@@ -181,9 +184,9 @@ textarea:focus-visible,
   }
 }
 
-.section--green h1,
-.section--green h2,
-.section--green h3 {
+.section--indigo h1,
+.section--indigo h2,
+.section--indigo h3 {
   color: var(--white);
 }
 
