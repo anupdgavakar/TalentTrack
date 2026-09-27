@@ -68,31 +68,19 @@ export default function Hero({ slides = [], stats = [], autoPlay = true, interva
         </div>
 
         <div className="hero__visual">
-          {/* Purely decorative floating shapes (violet/teal/amber/rose,
-              matching the site's colorful palette) — they drift gently on
-              their own loop; hovering one pauses it in place, zooms it in
-              and adds a glow. aria-hidden since they carry no information;
-              hidden entirely below 640px to keep the mobile hero clean. */}
-          {/* Two-layer markup on purpose: the outer .hero__blob is what
-              drifts (its own transform, via the float animation); the
-              inner .hero__blob__shape is what zooms/glows on hover (a
-              separate transform). Kept on separate elements because a
-              CSS animation's transform output keeps overriding a plain
-              hover-rule transform on that same element even once paused
-              — splitting the two effects across parent/child sidesteps
-              that entirely. */}
-          <span className="hero__blob hero__blob--1" aria-hidden="true">
-            <span className="hero__blob__shape" />
-          </span>
-          <span className="hero__blob hero__blob--2" aria-hidden="true">
-            <span className="hero__blob__shape" />
-          </span>
-          <span className="hero__blob hero__blob--3" aria-hidden="true">
-            <span className="hero__blob__shape" />
-          </span>
-          <span className="hero__blob hero__blob--4" aria-hidden="true">
-            <span className="hero__blob__shape" />
-          </span>
+          {/* Purely decorative gradient orbs (violet/teal/amber/rose,
+              matching the site's colorful palette) at the corners of the
+              hero image. Completely still until hovered — no idle motion
+              at all — then a single hover triggers everything together: a
+              spring zoom, a continuous liquid border-radius morph, a
+              spinning rainbow halo behind it, and a one-shot expanding
+              ping ring (see the .hero__orb rules in layout.css). aria-
+              hidden since they carry no information; hidden below 640px
+              to keep the mobile hero clean. */}
+          <span className="hero__orb hero__orb--1" aria-hidden="true" />
+          <span className="hero__orb hero__orb--2" aria-hidden="true" />
+          <span className="hero__orb hero__orb--3" aria-hidden="true" />
+          <span className="hero__orb hero__orb--4" aria-hidden="true" />
           <div className="image-slider">
             <div className="image-slider__viewport">
               <img
