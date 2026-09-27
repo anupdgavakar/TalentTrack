@@ -131,6 +131,12 @@
 .course-card__header--variant-4 {
   background-image: var(--gradient-teal);
 }
+.course-card__header--variant-5 {
+  background-image: var(--gradient-rose);
+}
+.course-card__header--variant-6 {
+  background-image: var(--gradient-indigo);
+}
 /* A real <img> element, not a CSS background — simpler and impossible to
    get backwards the way a layered background-image list was (see
    CourseCard.jsx's docblock: that approach silently hid or badly cropped
@@ -340,25 +346,33 @@
   align-items: center;
   justify-content: center;
 }
-.placement-card:nth-child(5n + 1) .placement-card__icon {
+.placement-card:nth-child(7n + 1) .placement-card__icon {
   background: var(--blue-100);
   color: var(--blue-600);
 }
-.placement-card:nth-child(5n + 2) .placement-card__icon {
+.placement-card:nth-child(7n + 2) .placement-card__icon {
   background: var(--green-100);
   color: var(--green-600);
 }
-.placement-card:nth-child(5n + 3) .placement-card__icon {
+.placement-card:nth-child(7n + 3) .placement-card__icon {
   background: var(--violet-100);
   color: var(--violet-600);
 }
-.placement-card:nth-child(5n + 4) .placement-card__icon {
+.placement-card:nth-child(7n + 4) .placement-card__icon {
   background: var(--amber-100);
   color: var(--amber-600);
 }
-.placement-card:nth-child(5n) .placement-card__icon {
+.placement-card:nth-child(7n + 5) .placement-card__icon {
   background: var(--teal-100);
   color: var(--teal-600);
+}
+.placement-card:nth-child(7n + 6) .placement-card__icon {
+  background: var(--rose-100);
+  color: var(--rose-600);
+}
+.placement-card:nth-child(7n) .placement-card__icon {
+  background: var(--indigo-100);
+  color: var(--indigo-600);
 }
 .placement-card h4 {
   margin-bottom: var(--space-1);
@@ -535,25 +549,33 @@ a.testimonial-card:hover {
   align-items: center;
   justify-content: center;
 }
-.stats-card:nth-child(5n + 1) .stats-card__icon {
+.stats-card:nth-child(7n + 1) .stats-card__icon {
   background: var(--blue-100);
   color: var(--blue-600);
 }
-.stats-card:nth-child(5n + 2) .stats-card__icon {
+.stats-card:nth-child(7n + 2) .stats-card__icon {
   background: var(--green-100);
   color: var(--green-600);
 }
-.stats-card:nth-child(5n + 3) .stats-card__icon {
+.stats-card:nth-child(7n + 3) .stats-card__icon {
   background: var(--violet-100);
   color: var(--violet-600);
 }
-.stats-card:nth-child(5n + 4) .stats-card__icon {
+.stats-card:nth-child(7n + 4) .stats-card__icon {
   background: var(--amber-100);
   color: var(--amber-600);
 }
-.stats-card:nth-child(5n) .stats-card__icon {
+.stats-card:nth-child(7n + 5) .stats-card__icon {
   background: var(--teal-100);
   color: var(--teal-600);
+}
+.stats-card:nth-child(7n + 6) .stats-card__icon {
+  background: var(--rose-100);
+  color: var(--rose-600);
+}
+.stats-card:nth-child(7n) .stats-card__icon {
+  background: var(--indigo-100);
+  color: var(--indigo-600);
 }
 .stats-card__value {
   font-size: var(--fs-2xl);
@@ -613,22 +635,28 @@ a.testimonial-card:hover {
   justify-content: center;
 }
 /* A small rotating palette so the grid reads as colorful rather than one
-   flat icon color repeated eight times — cycles every 5 items regardless
+   flat icon color repeated eight times — cycles every 7 items regardless
    of how many an admin ends up adding. */
-.why-choose-us-item:nth-child(5n + 1) .why-choose-us-item__icon {
+.why-choose-us-item:nth-child(7n + 1) .why-choose-us-item__icon {
   background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
 }
-.why-choose-us-item:nth-child(5n + 2) .why-choose-us-item__icon {
+.why-choose-us-item:nth-child(7n + 2) .why-choose-us-item__icon {
   background: var(--gradient-green);
 }
-.why-choose-us-item:nth-child(5n + 3) .why-choose-us-item__icon {
+.why-choose-us-item:nth-child(7n + 3) .why-choose-us-item__icon {
   background: var(--gradient-violet);
 }
-.why-choose-us-item:nth-child(5n + 4) .why-choose-us-item__icon {
+.why-choose-us-item:nth-child(7n + 4) .why-choose-us-item__icon {
   background: var(--gradient-amber);
 }
-.why-choose-us-item:nth-child(5n) .why-choose-us-item__icon {
+.why-choose-us-item:nth-child(7n + 5) .why-choose-us-item__icon {
   background: var(--gradient-teal);
+}
+.why-choose-us-item:nth-child(7n + 6) .why-choose-us-item__icon {
+  background: var(--gradient-rose);
+}
+.why-choose-us-item:nth-child(7n) .why-choose-us-item__icon {
+  background: var(--gradient-indigo);
 }
 
 .why-choose-us-item__label {

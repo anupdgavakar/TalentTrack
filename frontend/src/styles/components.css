@@ -124,12 +124,21 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--green-600);
-  background: var(--green-100);
+  /* SectionTitle.jsx sets --eyebrow-color/--eyebrow-bg per instance (a
+     hash of the eyebrow text, same technique as CourseCard/TestimonialCard)
+     so "WHAT WE DO", "HOW IT WORKS", "OUR APPROACH" etc. each get a
+     stable, distinct color instead of every section pill on every page
+     being the same flat green. Falls back to the original green if unset. */
+  color: var(--eyebrow-color, var(--green-600));
+  background: var(--eyebrow-bg, var(--green-100));
   padding: 0.35rem 0.9rem;
   border-radius: var(--radius-full);
   margin-bottom: var(--space-4);
 }
+/* On a dark or already-colored section band, the per-eyebrow hash color
+   would fight the background instead of reading cleanly — these two stay
+   fixed (white/lime-on-navy, brand-green-on-white) regardless of what
+   --eyebrow-color resolves to, same as before this change. */
 .section--dark .section-title__eyebrow {
   color: var(--lime-400);
   background: rgba(143, 226, 63, 0.14);
