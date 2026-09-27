@@ -335,145 +335,107 @@
   }
 }
 
-/* ---------- Hero decorative orbs ----------
-   Four gradient orbs at the corners of .hero__visual, peeking out from
-   behind the slider image. Completely still at rest — no idle animation,
-   no idle transform — by design: nothing here moves until the pointer is
-   on it. Hovering one fires everything at once:
-     1. a springy zoom + tilt (the transition on .hero__orb itself, with
-        an overshoot easing curve for a "jelly" feel)
-     2. a continuous liquid wobble (tt-orb-morph animates border-radius
-        only, never transform, so it can't fight the hover zoom above —
-        see the tt-blob-float postmortem this replaced)
-     3. a spinning rainbow halo behind it (::before, a blurred
-        conic-gradient ring, invisible until hover)
-     4. a one-shot expanding "ping" ring (::after, replays from scratch
-        every time a hover begins)
-   Leaving hover reverses steps 1 and 3 via transition/opacity; 2 and 4
-   simply stop being rendered (animations only exist under :hover). */
-.hero__orb {
+/* ---------- Hero decorative blobs ----------
+   Small floating shapes anchored to the corners of .hero__visual, peeking
+   out from behind the slider image. Two-layer on purpose: the outer
+   .hero__blob is what drifts (tt-blob-float, staggered duration/delay so
+   they don't move in sync) and is what gets hovered (it's the full-size
+   hit target); the inner .hero__blob__shape carries the actual color/shape
+   and is what zooms + glows on hover. They're split across parent/child
+   because a running CSS animation's `transform` output keeps outranking a
+   plain same-element hover-rule `transform` even once paused, which would
+   otherwise silently swallow the zoom. z-index: 0 on the outer keeps blobs
+   behind .image-slider by default (later in DOM order = painted on top at
+   the same stacking level); the hover rule bumps z-index above it so the
+   zoomed shape isn't clipped by the photo where they overlap. */
+.hero__blob {
   position: absolute;
   z-index: 0;
-  border-radius: 50%;
   pointer-events: auto;
-  cursor: pointer;
-  box-shadow: var(--shadow-md);
-  transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 400ms var(--ease-standard);
+  animation: tt-blob-float 7s ease-in-out infinite;
 }
-.hero__orb--1 {
-  top: -20px;
-  left: -20px;
-  width: 78px;
-  height: 78px;
+.hero__blob--1 {
+  top: -22px;
+  left: -22px;
+  width: 84px;
+  height: 84px;
+  animation-duration: 7s;
+}
+.hero__blob--2 {
+  top: -16px;
+  right: 18%;
+  width: 60px;
+  height: 60px;
+  animation-duration: 8.5s;
+  animation-delay: -2s;
+}
+.hero__blob--3 {
+  bottom: -26px;
+  right: -22px;
+  width: 96px;
+  height: 96px;
+  animation-duration: 9s;
+  animation-delay: -4s;
+}
+.hero__blob--4 {
+  bottom: 20%;
+  left: -18px;
+  width: 54px;
+  height: 54px;
+  animation-duration: 6.5s;
+  animation-delay: -1s;
+}
+.hero__blob__shape {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 62% 38% 55% 45% / 45% 55% 45% 55%;
+  opacity: 0.85;
+  transition: transform 320ms var(--ease-standard), box-shadow 320ms var(--ease-standard),
+    opacity 320ms var(--ease-standard);
+}
+.hero__blob--1 .hero__blob__shape {
   background: var(--gradient-violet);
 }
-.hero__orb--2 {
-  top: -14px;
-  right: 18%;
-  width: 56px;
-  height: 56px;
+.hero__blob--2 .hero__blob__shape {
   background: var(--gradient-teal);
 }
-.hero__orb--3 {
-  bottom: -24px;
-  right: -20px;
-  width: 90px;
-  height: 90px;
+.hero__blob--3 .hero__blob__shape {
   background: var(--gradient-amber);
 }
-.hero__orb--4 {
-  bottom: 20%;
-  left: -16px;
-  width: 50px;
-  height: 50px;
+.hero__blob--4 .hero__blob__shape {
   background: var(--gradient-rose);
 }
-.hero__orb::before {
-  content: "";
-  position: absolute;
-  inset: -16px;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    var(--violet-500),
-    var(--teal-500),
-    var(--rose-500),
-    var(--amber-500),
-    var(--violet-500)
-  );
-  filter: blur(8px);
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 300ms var(--ease-standard);
-}
-.hero__orb::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.75);
-  opacity: 0;
-}
-.hero__orb:hover {
+.hero__blob:hover {
   z-index: 2;
-  transform: scale(1.45) rotate(10deg);
-  animation: tt-orb-morph 1100ms ease-in-out infinite;
-  box-shadow: 0 20px 45px rgba(10, 18, 40, 0.4);
+  animation-play-state: paused;
 }
-.hero__orb:hover::before {
+.hero__blob:hover .hero__blob__shape {
   opacity: 1;
-  animation: tt-orb-spin 2.2s linear infinite;
+  transform: scale(1.35);
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2), 0 14px 30px rgba(10, 18, 40, 0.35);
 }
-.hero__orb:hover::after {
-  animation: tt-orb-ping 900ms ease-out;
-}
-@keyframes tt-orb-morph {
+@keyframes tt-blob-float {
   0%,
   100% {
-    border-radius: 50%;
-  }
-  25% {
-    border-radius: 62% 38% 55% 45% / 48% 52% 48% 52%;
+    transform: translate(0, 0) rotate(0deg);
   }
   50% {
-    border-radius: 42% 58% 48% 52% / 58% 42% 62% 38%;
-  }
-  75% {
-    border-radius: 58% 42% 62% 38% / 40% 60% 45% 55%;
-  }
-}
-@keyframes tt-orb-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes tt-orb-ping {
-  from {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  to {
-    transform: scale(1.9);
-    opacity: 0;
+    transform: translate(6px, -10px) rotate(6deg);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero__orb:hover {
-    animation: none;
-    transform: scale(1.15);
-  }
-  .hero__orb:hover::before,
-  .hero__orb:hover::after {
+  .hero__blob {
     animation: none;
   }
 }
 @media (hover: none) {
-  .hero__orb {
+  .hero__blob {
     pointer-events: none;
   }
 }
 @media (max-width: 640px) {
-  .hero__orb {
+  .hero__blob {
     display: none;
   }
 }
