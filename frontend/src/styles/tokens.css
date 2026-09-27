@@ -85,6 +85,12 @@
   --gradient-teal: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-500) 100%);
   --gradient-rose: linear-gradient(135deg, var(--rose-700) 0%, var(--rose-500) 100%);
   --gradient-indigo: linear-gradient(135deg, var(--indigo-700) 0%, var(--indigo-500) 100%);
+  /* Same navy anchor as --gradient-navy-green (keeps the hero reading as
+     "this site", not a random gradient), swapping the blue/green accent
+     for violet/teal — a fresher, less repeated combination since navy+
+     blue+green is already used for the CTA band and several icon badges
+     elsewhere on the page. */
+  --gradient-hero: linear-gradient(135deg, var(--navy-900) 0%, var(--violet-700) 55%, var(--teal-500) 130%);
 
   /* ---- Typography ---- */
   --font-sans: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
