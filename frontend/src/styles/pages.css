@@ -5,7 +5,7 @@
 
 /* ---------- Page header: compact dark banner + breadcrumb ---------- */
 .page-header {
-  background: var(--gradient-navy);
+  background: var(--gradient-page-header);
   color: var(--white);
   padding: var(--space-10) 0 var(--space-12);
 }
