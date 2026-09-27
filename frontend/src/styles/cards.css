@@ -30,12 +30,33 @@
   width: 56px;
   height: 56px;
   border-radius: var(--radius-md);
+  /* Overridden below per position — this is only the fallback for a
+     .service-card rendered somewhere the nth-child rules don't reach. */
   background: var(--gradient-navy-green);
   color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: var(--space-5);
+}
+/* ServiceCard is used for the homepage/About page's four core services
+   (Training, Placement, Recruitment, Consulting — always in that order,
+   see HomePage.jsx's SERVICES and AboutPage.jsx's PILLARS) and for the
+   homepage's six-step "How It Works" list, which just cycles through the
+   same four colors again. One color per service line, consistent
+   wherever that service is represented elsewhere in the palette
+   (Training=blue, Placement=green, Recruitment=violet, Consulting=amber). */
+.service-card:nth-child(4n + 1) .service-card__icon {
+  background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
+}
+.service-card:nth-child(4n + 2) .service-card__icon {
+  background: var(--gradient-green);
+}
+.service-card:nth-child(4n + 3) .service-card__icon {
+  background: var(--gradient-violet);
+}
+.service-card:nth-child(4n) .service-card__icon {
+  background: var(--gradient-amber);
 }
 .service-card h3 {
   margin-bottom: var(--space-2);
@@ -83,9 +104,9 @@
 /* Header band — a course's own uploaded photo, shown as-is and filling the
    whole header (see .course-card__header-image below), or, with no photo
    set, a flat brand gradient so the card is never just an empty gray box.
-   The four gradient variants reuse the exact pairs already established by
-   why-choose-us-item's icon badges, picked per-course by CourseCard's
-   title hash — see that component for why this isn't nth-child-based. */
+   The five gradient variants reuse the same palette as why-choose-us-item's
+   icon badges, picked per-course by CourseCard's title hash — see that
+   component for why this isn't nth-child-based. */
 .course-card__header {
   position: relative;
   height: 132px;
@@ -102,10 +123,13 @@
   background-image: var(--gradient-green);
 }
 .course-card__header--variant-2 {
-  background-image: linear-gradient(135deg, var(--navy-800) 0%, var(--blue-600) 100%);
+  background-image: var(--gradient-violet);
 }
 .course-card__header--variant-3 {
-  background-image: linear-gradient(135deg, var(--green-500) 0%, var(--lime-400) 100%);
+  background-image: var(--gradient-amber);
+}
+.course-card__header--variant-4 {
+  background-image: var(--gradient-teal);
 }
 /* A real <img> element, not a CSS background — simpler and impossible to
    get backwards the way a layered background-image list was (see
@@ -307,11 +331,34 @@
   height: 52px;
   margin: 0 auto var(--space-4);
   border-radius: var(--radius-full);
+  /* Overridden below per position — job categories are admin-managed and
+     variable in count, so this rotates through the full palette rather
+     than one flat color for every category. */
   background: var(--green-100);
   color: var(--green-600);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.placement-card:nth-child(5n + 1) .placement-card__icon {
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+.placement-card:nth-child(5n + 2) .placement-card__icon {
+  background: var(--green-100);
+  color: var(--green-600);
+}
+.placement-card:nth-child(5n + 3) .placement-card__icon {
+  background: var(--violet-100);
+  color: var(--violet-600);
+}
+.placement-card:nth-child(5n + 4) .placement-card__icon {
+  background: var(--amber-100);
+  color: var(--amber-600);
+}
+.placement-card:nth-child(5n) .placement-card__icon {
+  background: var(--teal-100);
+  color: var(--teal-600);
 }
 .placement-card h4 {
   margin-bottom: var(--space-1);
@@ -355,8 +402,11 @@
 .job-card__badge {
   font-size: var(--fs-xs);
   font-weight: 700;
-  color: var(--green-600);
-  background: var(--green-100);
+  /* Amber rather than green — green is already this site's "active/open"
+     color (see admin status badges), so "Featured" gets its own color
+     instead of overloading that same green everywhere. */
+  color: var(--amber-600);
+  background: var(--amber-100);
   padding: 0.25rem 0.65rem;
   border-radius: var(--radius-full);
 }
@@ -476,11 +526,34 @@ a.testimonial-card:hover {
   height: 48px;
   margin: 0 auto var(--space-4);
   border-radius: var(--radius-full);
+  /* Overridden below per position — same rotating-palette treatment as
+     why-choose-us-item, so a row of admin-added statistics reads as
+     colorful rather than one flat blue circle repeated. */
   background: var(--blue-100);
   color: var(--blue-600);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.stats-card:nth-child(5n + 1) .stats-card__icon {
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+.stats-card:nth-child(5n + 2) .stats-card__icon {
+  background: var(--green-100);
+  color: var(--green-600);
+}
+.stats-card:nth-child(5n + 3) .stats-card__icon {
+  background: var(--violet-100);
+  color: var(--violet-600);
+}
+.stats-card:nth-child(5n + 4) .stats-card__icon {
+  background: var(--amber-100);
+  color: var(--amber-600);
+}
+.stats-card:nth-child(5n) .stats-card__icon {
+  background: var(--teal-100);
+  color: var(--teal-600);
 }
 .stats-card__value {
   font-size: var(--fs-2xl);
@@ -540,19 +613,22 @@ a.testimonial-card:hover {
   justify-content: center;
 }
 /* A small rotating palette so the grid reads as colorful rather than one
-   flat icon color repeated eight times — cycles every 4 items regardless
+   flat icon color repeated eight times — cycles every 5 items regardless
    of how many an admin ends up adding. */
-.why-choose-us-item:nth-child(4n + 1) .why-choose-us-item__icon {
+.why-choose-us-item:nth-child(5n + 1) .why-choose-us-item__icon {
   background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
 }
-.why-choose-us-item:nth-child(4n + 2) .why-choose-us-item__icon {
+.why-choose-us-item:nth-child(5n + 2) .why-choose-us-item__icon {
   background: var(--gradient-green);
 }
-.why-choose-us-item:nth-child(4n + 3) .why-choose-us-item__icon {
-  background: linear-gradient(135deg, var(--navy-800) 0%, var(--blue-600) 100%);
+.why-choose-us-item:nth-child(5n + 3) .why-choose-us-item__icon {
+  background: var(--gradient-violet);
 }
-.why-choose-us-item:nth-child(4n) .why-choose-us-item__icon {
-  background: linear-gradient(135deg, var(--green-500) 0%, var(--lime-400) 100%);
+.why-choose-us-item:nth-child(5n + 4) .why-choose-us-item__icon {
+  background: var(--gradient-amber);
+}
+.why-choose-us-item:nth-child(5n) .why-choose-us-item__icon {
+  background: var(--gradient-teal);
 }
 
 .why-choose-us-item__label {

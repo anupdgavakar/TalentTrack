@@ -1,7 +1,7 @@
 import { CheckCircle2 } from "lucide-react";
 import Button from "../ui/Button";
 
-// Four on-brand gradient combinations, built from the same palette as
+// Five on-brand gradient combinations, built from the same palette as
 // WhyChooseUs's icon badges (see cards.css's why-choose-us-item
 // nth-child rules) so a course without its own thumbnail still gets a
 // distinct, colorful header instead of a flat placeholder. Picked by a
@@ -10,7 +10,7 @@ import Button from "../ui/Button";
 // a single-child carousel slide (CourseCarousel) — an nth-child rule keyed
 // to sibling position would see every carousel card as "1st", since each
 // one is the only child of its own slide wrapper.
-const HEADER_VARIANTS = 4;
+const HEADER_VARIANTS = 5;
 
 function variantIndex(title) {
   let hash = 0;

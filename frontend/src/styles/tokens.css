@@ -25,6 +25,32 @@
   --lime-400: #8fe23f;
   --green-100: #e4f8ea;
 
+  /* ---- Extended accent palette ----
+     The primary/secondary brand colors above (navy/blue, green) are used
+     for anything with real meaning — CTAs, links, "active"/"success"
+     states. These three are purely decorative rotation colors: icon
+     badges, card header gradients, avatar initials and similar spots that
+     cycle through a small palette (why-choose-us-item, ServiceCard,
+     StatsCard, PlacementCard, CourseCard header, all in cards.css) so the
+     site doesn't read as only-blue-and-green everywhere. Same hue family
+     TestimonialCard.jsx's AVATAR_COLORS already used for the same reason
+     — matched here rather than invented fresh, so a violet icon badge and
+     a violet reviewer avatar look like the same violet. */
+  --violet-700: #6d28d9;
+  --violet-600: #7c3aed;
+  --violet-500: #9061f9;
+  --violet-100: #f1ebfe;
+
+  --amber-700: #9a3412;
+  --amber-600: #c2410c;
+  --amber-500: #ea580c;
+  --amber-100: #fdf1e8;
+
+  --teal-700: #0e7490;
+  --teal-600: #0891b2;
+  --teal-500: #22b8cf;
+  --teal-100: #e3f6fa;
+
   /* ---- Neutrals ---- */
   --white: #ffffff;
   --bg-app: #f6f8fc;
@@ -44,6 +70,9 @@
   --gradient-navy: linear-gradient(135deg, var(--navy-900) 0%, var(--blue-700) 100%);
   --gradient-navy-green: linear-gradient(135deg, var(--navy-900) 0%, var(--blue-700) 55%, var(--green-500) 130%);
   --gradient-green: linear-gradient(135deg, var(--green-600) 0%, var(--lime-400) 100%);
+  --gradient-violet: linear-gradient(135deg, var(--violet-700) 0%, var(--violet-500) 100%);
+  --gradient-amber: linear-gradient(135deg, var(--amber-700) 0%, var(--amber-500) 100%);
+  --gradient-teal: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-500) 100%);
 
   /* ---- Typography ---- */
   --font-sans: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
